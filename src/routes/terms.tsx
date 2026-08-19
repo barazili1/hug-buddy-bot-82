@@ -134,7 +134,7 @@ function TermsPage() {
 
           {/* 1 - platforms */}
           <Step index={1} title="اختر المنصة" complete={Boolean(platform)} delay={0}>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="grid grid-cols-4 gap-2">
               {platforms.map((p) => {
                 const active = platform === p.id;
                 return (
@@ -145,8 +145,8 @@ function TermsPage() {
                       setPlatform(p.id);
                       setRegistered(false);
                     }}
-                    style={{ width: 100, height: 80 }}
-                    className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
+                    style={{ height: 80 }}
+                    className={`flex w-full flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
                       active
                         ? "luxe-ring border-gold bg-[linear-gradient(180deg,oklch(0.66_0.26_300/0.25),oklch(0.5_0.22_295/0.14))] shadow-[0_0_30px_oklch(0.66_0.26_300/0.55)]"
                         : "border-gold/20 bg-background/30 hover:border-gold/60"
@@ -161,7 +161,9 @@ function TermsPage() {
                     >
                       {p.short}
                     </span>
-                    <span className="text-[11px] font-bold text-foreground">{p.name}</span>
+                    <span className="w-full truncate px-1 text-center text-[10px] font-bold text-foreground">
+                      {p.name}
+                    </span>
                   </button>
                 );
               })}
