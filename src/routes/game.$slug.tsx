@@ -315,7 +315,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 }
 
 const cellBase =
-  "relative flex aspect-square items-center justify-center rounded-xl border border-gold/20 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.75),oklch(0.11_0.03_300/0.85))] text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_6px_14px_-8px_oklch(0_0_0/0.9)] transition-all duration-300";
+  "relative flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-gold/20 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.75),oklch(0.11_0.03_300/0.85))] text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_6px_14px_-8px_oklch(0_0_0/0.9)] transition-all duration-300";
 const cellSafe =
   "border-gold bg-[linear-gradient(180deg,oklch(0.85_0.15_88/0.35),oklch(0.62_0.13_75/0.25))] text-gold-soft shadow-[0_0_26px_oklch(0.85_0.15_88/0.55),inset_0_1px_0_oklch(1_0_0/0.25)]";
 const cellIdle = "text-muted-foreground/70";
@@ -440,7 +440,7 @@ function Board({
                     <img
                       src={minesGemAsset.url}
                       alt="Diamond"
-                      className="animate-reveal h-8 w-8 object-contain drop-shadow-[0_0_10px_oklch(0.85_0.15_88/0.6)]"
+                      className="animate-reveal absolute inset-0 h-full w-full object-cover drop-shadow-[0_0_10px_oklch(0.85_0.15_88/0.6)]"
                     />
                   ) : (
                     <span className="text-muted-foreground/60">◆</span>
