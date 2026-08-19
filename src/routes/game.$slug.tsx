@@ -152,7 +152,7 @@ function GamePredictor() {
 
         <div className="mx-auto max-w-3xl px-4">
           {/* Game hero */}
-          <section className="luxe-panel luxe-hairline relative mt-6 overflow-hidden">
+          <section className="luxe-panel luxe-hairline animate-rise relative mt-6 overflow-hidden">
             <img
               src={image}
               alt={`${name} game artwork`}
@@ -179,7 +179,7 @@ function GamePredictor() {
           </section>
 
           {/* Prediction board */}
-          <section className="luxe-panel luxe-hairline relative mt-5 overflow-hidden p-5">
+          <section className="luxe-panel luxe-hairline animate-rise relative mt-5 overflow-hidden p-5">
             <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/15 blur-[70px]" />
             <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-gold/10 blur-[70px]" />
 
@@ -435,7 +435,7 @@ function Board({
                   key={i}
                   className={`${cellBase} ${safe ? cellSafe : cellIdle}`}
                 >
-                  {safe ? "💎" : "◆"}
+                  <span className={safe ? "animate-reveal" : ""}>{safe ? "💎" : "◆"}</span>
                 </div>
               );
             })}
@@ -490,7 +490,7 @@ function Board({
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
-            <div key={r} className="flex items-center gap-2">
+            <div key={r} className={`flex items-center gap-2 ${shown ? "animate-rise" : ""}`}>
               <span className="w-16 shrink-0 rounded-lg border border-gold/40 py-1 text-center text-[10px] font-bold text-gold">
                 {row.multiplier}
               </span>
@@ -505,7 +505,7 @@ function Board({
                       key={c}
                       className={`${cellBase} ${safe ? cellSafe : shown ? cellIdle : cellHidden}`}
                     >
-                      {safe ? "🐸" : "🍃"}
+                      <span className={safe ? "animate-reveal" : ""}>{safe ? "🐸" : "🍃"}</span>
                     </div>
                   );
                 })}
@@ -611,7 +611,7 @@ function Board({
             const shown = r >= prediction.rows.length - revealCount;
             const cashout = shown && r === prediction.cashoutRow;
             return (
-              <div key={r} className="flex items-center gap-2">
+              <div key={r} className={`flex items-center gap-2 ${shown ? "animate-rise" : ""}`}>
                 <div
                   className="grid flex-1 gap-1.5"
                   style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
@@ -625,7 +625,7 @@ function Board({
                           safe ? cellSafe : shown ? cellIdle : cellHidden
                         }`}
                       >
-                        {safe ? "✦" : "·"}
+                        <span className={safe ? "animate-reveal" : ""}>{safe ? "✦" : "·"}</span>
                       </div>
                     );
                   })}
