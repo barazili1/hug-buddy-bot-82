@@ -21,14 +21,14 @@ function mulberry32(seed: number) {
   };
 }
 
-/** Rotating slot whose length is a deterministic 15–30 minutes. */
+/** Rotating slot whose length is a deterministic 5–15 minutes. */
 export function getLuckSlot(now: number) {
   let start = ANCHOR;
   let index = 0;
   // walk forward in deterministic slots (cheap: max a few thousand iterations)
   for (;;) {
     const rng = mulberry32(index * 2654435761 + 12345);
-    const duration = Math.round((15 + rng() * 15) * MIN_MS);
+    const duration = Math.round((5 + rng() * 10) * MIN_MS);
     if (now < start + duration || index > 200_000) {
       return { index, start, endsAt: start + duration };
     }
