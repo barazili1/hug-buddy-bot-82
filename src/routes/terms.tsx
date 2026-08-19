@@ -50,6 +50,7 @@ function TermsPage() {
   const [checking, setChecking] = useState(false);
   const [joined, setJoined] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [deposited, setDeposited] = useState(false);
 
   useEffect(() => {
     if (!checking) return;
@@ -63,52 +64,52 @@ function TermsPage() {
 
   const selected = platforms.find((p) => p.id === platform);
   const idValid = /^\d{10,14}$/.test(value);
-  const done = [Boolean(platform), registered, joined, copied, true, idValid].filter(
-    Boolean,
-  ).length;
+  const states = [Boolean(platform), registered, joined, copied, deposited, idValid];
+  const done = states.filter(Boolean).length;
   const progress = Math.round((done / 6) * 100);
 
   return (
     <>
       <ParticlesBackground />
       {checking ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-5 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-5 backdrop-blur-xl">
           <div
             dir="rtl"
-            className="luxe-panel luxe-ring animate-rise w-full max-w-sm overflow-hidden p-7 text-center"
+            className="luxe-panel luxe-ring luxe-corners animate-step-in w-full max-w-sm overflow-hidden p-8 text-center"
           >
-            <div className="relative mx-auto h-16 w-16">
+            <div className="relative mx-auto h-20 w-20">
               <span className="absolute inset-0 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
               <span className="animate-spin-slow absolute inset-2 rounded-full border border-dashed border-gold-soft/50" />
-              <span className="animate-pulse-glow absolute inset-5 rounded-full bg-gold/40 blur-[6px]" />
+              <span className="animate-pulse-glow absolute inset-6 rounded-full bg-gold/50 blur-[8px]" />
             </div>
-            <p className="gold-text mt-5 text-sm font-extrabold tracking-wide">
+            <p className="gold-shimmer-text mt-6 text-base font-extrabold tracking-wide">
               جارٍ ربط حسابك بالمنصة المختارة
             </p>
-            <p className="mt-1.5 text-[11px] text-muted-foreground">
+            <p className="mt-2 text-[11px] tracking-widest text-muted-foreground">
               {selected ? selected.name : ""} — الرجاء الانتظار…
             </p>
-            <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-foreground/10">
-              <span className="luxe-sheen block h-full w-full luxe-aurora" />
+            <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-foreground/10">
+              <span className="luxe-sheen luxe-aurora block h-full w-full" />
             </div>
           </div>
         </div>
       ) : null}
-      <main className="relative z-10 min-h-screen pb-16" dir="rtl">
-        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[420px] luxe-aurora blur-[90px] opacity-40" />
-        {/* Top bar */}
-        <header className="sticky top-0 z-30 border-b border-gold/15 bg-background/50 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-2">
-            <span className="gold-text text-[13px] font-extrabold tracking-[0.22em]">
-              Smart Odds
+
+      <main className="relative z-10 min-h-screen pb-28" dir="rtl">
+        <div className="luxe-aurora pointer-events-none fixed inset-x-0 top-0 -z-10 h-[520px] opacity-40 blur-[110px]" />
+
+        <header className="sticky top-0 z-30 border-b border-gold/15 bg-background/55 backdrop-blur-2xl">
+          <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-2.5">
+            <span className="gold-shimmer-text text-[13px] font-extrabold tracking-[0.28em]">
+              SMART ODDS
             </span>
-            <span className="rounded-full border border-gold/30 px-2.5 py-0.5 text-[10px] font-bold tracking-widest text-gold-soft">
-              الشروط
+            <span className="rounded-full border border-gold/30 bg-gold/5 px-3 py-0.5 text-[10px] font-bold tracking-[0.2em] text-gold-soft">
+              {done}/6
             </span>
           </div>
-          <div className="h-0.5 w-full bg-foreground/5">
+          <div className="h-[3px] w-full bg-foreground/5">
             <span
-              className="block h-full luxe-aurora transition-[width] duration-700"
+              className="luxe-aurora block h-full transition-[width] duration-700"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -116,156 +117,172 @@ function TermsPage() {
 
         <div className="mx-auto max-w-2xl px-4">
           {/* Hero */}
-          <section className="animate-rise relative flex flex-col items-center pt-7">
-            <div className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-full bg-primary/25 blur-[80px]" />
-            <img
-              src={logo}
-              alt="Smart Odds logo"
-              width={816}
-              height={816}
-              className="animate-float relative w-20 drop-shadow-[0_0_38px_oklch(0.66_0.26_300/0.6)]"
-            />
-            <h1 className="gold-text relative mt-3 text-2xl font-extrabold tracking-[0.2em]">
-              Smart Odds
-            </h1>
-            <p className="relative mt-1.5 text-center text-[11px] text-muted-foreground">
-              أكمل الشروط التالية لتفعيل التوقعات بنسبة دقة 90%
+          <section className="animate-step-in relative flex flex-col items-center pt-9">
+            <div className="pointer-events-none absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/25 blur-[90px]" />
+            <div className="luxe-ring relative rounded-full p-1.5">
+              <img
+                src={logo}
+                alt="Smart Odds logo"
+                width={816}
+                height={816}
+                className="animate-float w-24 drop-shadow-[0_0_44px_oklch(0.66_0.26_300/0.65)]"
+              />
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+              <span className="h-px w-10 bg-gradient-to-l from-transparent to-gold/70" />
+              <h1 className="gold-shimmer-text text-2xl font-extrabold tracking-[0.24em]">
+                الشـروط
+              </h1>
+              <span className="h-px w-10 bg-gradient-to-r from-transparent to-gold/70" />
+            </div>
+            <p className="relative mt-2 max-w-xs text-center text-[11.5px] leading-relaxed text-muted-foreground">
+              أكمل الخطوات الستة لتفعيل حسابك والحصول على توقعات بدقة تصل إلى 90%
             </p>
-            <span className="luxe-ring mt-3 rounded-full border border-gold/25 bg-background/40 px-4 py-1 text-[10px] font-bold tracking-[0.2em] text-gold-soft">
-              {done} / 6 مكتمل
-            </span>
           </section>
 
-          {/* 1 - platforms */}
-          <Step index={1} title="اختر المنصة" complete={Boolean(platform)} delay={0}>
-            <div className="grid grid-cols-4 gap-2">
-              {platforms.map((p) => {
-                const active = platform === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => {
-                      setPlatform(p.id);
-                      setRegistered(false);
-                    }}
-                    style={{ height: 80 }}
-                    className={`flex w-full flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
-                      active
-                        ? "luxe-ring border-gold bg-[linear-gradient(180deg,oklch(0.66_0.26_300/0.25),oklch(0.5_0.22_295/0.14))] shadow-[0_0_30px_oklch(0.66_0.26_300/0.55)]"
-                        : "border-gold/20 bg-background/30 hover:border-gold/60"
-                    }`}
-                  >
-                    <span
-                      className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition-all ${
+          {/* Timeline */}
+          <div className="relative mt-8 pe-1 ps-7">
+            <span className="absolute inset-y-3 start-3 w-px bg-gradient-to-b from-transparent via-gold/35 to-transparent" />
+
+            <Step index={1} title="اختر المنصة" complete={states[0]} delay={0}>
+              <div className="grid grid-cols-4 gap-2">
+                {platforms.map((p) => {
+                  const active = platform === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => {
+                        setPlatform(p.id);
+                        setRegistered(false);
+                      }}
+                      className={`group flex h-[86px] w-full flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
                         active
-                          ? "animate-reveal border-gold shadow-[0_0_18px_oklch(0.66_0.26_300/0.7)]"
-                          : "border-gold/30 bg-background/60"
+                          ? "luxe-ring border-gold bg-[linear-gradient(180deg,oklch(0.66_0.26_300/0.28),oklch(0.5_0.22_295/0.12))] shadow-[0_0_34px_-6px_oklch(0.66_0.26_300/0.75)]"
+                          : "border-gold/15 bg-background/30 hover:border-gold/50"
                       }`}
                     >
-                      <img
-                        src={p.logo}
-                        alt={p.name}
-                        className="h-full w-full object-cover"
-                      />
-                    </span>
-                    <span className="w-full truncate px-1 text-center text-[10px] font-bold text-foreground">
-                      {p.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </Step>
+                      <span
+                        className={`relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 ${
+                          active
+                            ? "animate-reveal border-gold shadow-[0_0_20px_oklch(0.66_0.26_300/0.75)]"
+                            : "border-gold/25 bg-background/60 grayscale-[0.35] group-hover:grayscale-0"
+                        }`}
+                      >
+                        <img src={p.logo} alt={p.name} className="h-full w-full object-cover" />
+                      </span>
+                      <span className="w-full truncate px-1 text-center text-[10px] font-bold tracking-wide text-foreground">
+                        {p.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </Step>
 
-          {/* 2 - register */}
-          <Step
-            index={2}
-            title={`التسجيل في منصة ${selected ? selected.name : "( اختر منصة أولاً )"}`}
-            complete={registered}
-            delay={60}
-          >
-            <a
-              href={selected?.url ?? "#"}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => selected && setRegistered(true)}
-              className={`luxe-sheen block w-full rounded-2xl px-4 py-3 text-center text-sm font-extrabold transition-transform active:scale-[0.98] ${
-                selected
-                  ? "bg-foreground text-background"
-                  : "pointer-events-none bg-foreground/30 text-background/60"
-              }`}
+            <Step
+              index={2}
+              title={`التسجيل في منصة ${selected ? selected.name : "…"}`}
+              complete={states[1]}
+              delay={70}
+              locked={!platform}
             >
-              التسجيل
-            </a>
-          </Step>
-
-          {/* 3 - telegram */}
-          <Step index={3} title="الانضمام إلى قناة التليجرام" complete={joined} delay={120}>
-            <a
-              href={TELEGRAM}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setJoined(true)}
-              className="luxe-sheen block w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
-            >
-              انضمام
-            </a>
-          </Step>
-
-          {/* 4 - promo */}
-          <Step index={4} title="إنشاء حساب بالبروموكود الخاص بنا" complete={copied} delay={180}>
-            <div className="flex items-center gap-2">
-              <span
-                dir="ltr"
-                className="luxe-ring flex-1 rounded-2xl border border-gold/30 bg-background/50 px-4 py-3 text-center text-base font-extrabold tracking-[0.25em] text-gold-soft"
+              <a
+                href={selected?.url ?? "#"}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => selected && setRegistered(true)}
+                className={`luxe-sheen block w-full rounded-2xl px-4 py-3.5 text-center text-sm font-extrabold tracking-wide transition-transform active:scale-[0.98] ${
+                  selected
+                    ? "gold-button"
+                    : "pointer-events-none bg-foreground/15 text-foreground/40"
+                }`}
               >
-                {PROMO}
-              </span>
+                التسجيل
+              </a>
+            </Step>
+
+            <Step index={3} title="الانضمام إلى قناة التليجرام" complete={states[2]} delay={140}>
+              <a
+                href={TELEGRAM}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setJoined(true)}
+                className="luxe-sheen block w-full rounded-2xl bg-foreground px-4 py-3.5 text-center text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
+              >
+                انضمام
+              </a>
+            </Step>
+
+            <Step index={4} title="إنشاء حساب بالبروموكود الخاص بنا" complete={states[3]} delay={210}>
+              <div className="flex items-center gap-2">
+                <span
+                  dir="ltr"
+                  className="luxe-ring flex-1 rounded-2xl border border-gold/25 bg-background/50 px-4 py-3.5 text-center text-base font-extrabold tracking-[0.3em] text-gold-soft"
+                >
+                  {PROMO}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(PROMO);
+                    setCopied(true);
+                  }}
+                  className="gold-button rounded-2xl px-5 py-3.5 text-sm font-extrabold transition-transform active:scale-[0.98]"
+                >
+                  {copied ? "تم ✓" : "نسخ"}
+                </button>
+              </div>
+            </Step>
+
+            <Step index={5} title="إيداع مبلغ بحد أدنى" complete={states[4]} delay={280}>
+              <div className="grid grid-cols-2 gap-3">
+                {["300 جنيه", "6 دولار"].map((amount) => (
+                  <span
+                    key={amount}
+                    className="luxe-corners relative rounded-2xl border border-gold/20 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.6),oklch(0.11_0.03_300/0.85))] px-4 py-4 text-center text-base font-extrabold text-gold-soft"
+                  >
+                    {amount}
+                  </span>
+                ))}
+              </div>
               <button
                 type="button"
-                onClick={() => {
-                  void navigator.clipboard?.writeText(PROMO);
-                  setCopied(true);
-                  window.setTimeout(() => setCopied(false), 1500);
-                }}
-                className="rounded-2xl bg-foreground px-4 py-3 text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
+                onClick={() => setDeposited(true)}
+                className={`mt-3 w-full rounded-2xl border px-4 py-2.5 text-xs font-extrabold transition-all ${
+                  deposited
+                    ? "border-gold bg-gold/15 text-gold-soft"
+                    : "border-gold/25 text-muted-foreground hover:border-gold/60 hover:text-gold-soft"
+                }`}
               >
-                {copied ? "تم" : "نسخ"}
+                {deposited ? "تم الإيداع ✓" : "تأكيد الإيداع"}
               </button>
-            </div>
-          </Step>
+            </Step>
 
-          {/* 5 - deposit */}
-          <Step index={5} title="إيداع مبلغ بحد أدنى" complete delay={240}>
-            <div className="grid grid-cols-2 gap-3">
-              {["300 جنيه", "6 دولار"].map((amount) => (
-                <span
-                  key={amount}
-                  className="rounded-2xl border border-gold/25 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.6),oklch(0.11_0.03_300/0.8))] px-4 py-3 text-center text-sm font-extrabold text-gold-soft transition-transform hover:-translate-y-0.5"
-                >
-                  {amount}
-                </span>
-              ))}
-            </div>
-          </Step>
+            <Step index={6} title="إدخال الـ ID الخاص بك" complete={states[5]} delay={350}>
+              <input
+                value={value}
+                onChange={(e) => {
+                  setValue(e.target.value.replace(/\D/g, "").slice(0, 14));
+                  setError(null);
+                }}
+                inputMode="numeric"
+                placeholder="ID"
+                dir="ltr"
+                className="w-full rounded-2xl border border-gold/25 bg-background/50 px-4 py-3.5 text-center text-lg font-bold tracking-[0.3em] text-foreground outline-none transition-all placeholder:tracking-normal placeholder:text-muted-foreground/60 focus:border-gold focus:shadow-[0_0_26px_-8px_oklch(0.66_0.26_300/0.9)]"
+              />
+              {error ? (
+                <p className="animate-reveal mt-2 text-center text-[11px] font-semibold text-destructive">
+                  {error}
+                </p>
+              ) : null}
+            </Step>
+          </div>
+        </div>
 
-          {/* 6 - id */}
-          <Step index={6} title="إدخال الـ ID الخاص بك" complete={idValid} delay={300}>
-            <input
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value.replace(/\D/g, "").slice(0, 14));
-                setError(null);
-              }}
-              inputMode="numeric"
-              placeholder="ID"
-              dir="ltr"
-              className="w-full rounded-2xl border border-gold/25 bg-background/50 px-4 py-3 text-center text-base font-bold tracking-[0.2em] text-foreground outline-none transition-colors focus:border-gold"
-            />
-            {error ? (
-              <p className="mt-2 text-[11px] font-semibold text-destructive">{error}</p>
-            ) : null}
+        {/* Sticky action */}
+        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-gold/15 bg-background/70 px-4 py-3 backdrop-blur-2xl">
+          <div className="mx-auto max-w-2xl">
             <button
               type="button"
               disabled={checking}
@@ -280,11 +297,11 @@ function TermsPage() {
                 }
                 setChecking(true);
               }}
-              className="gold-button mt-3 w-full rounded-2xl px-4 py-3 text-sm font-extrabold transition-transform active:scale-[0.98]"
+              className="gold-button luxe-sheen w-full rounded-2xl px-4 py-4 text-sm font-extrabold tracking-[0.12em] transition-transform active:scale-[0.98]"
             >
-              {checking ? "جارٍ التحقق من الشروط…" : "التحقق من الشروط"}
+              {checking ? "جارٍ التحقق…" : "التحقق من الشروط"}
             </button>
-          </Step>
+          </div>
         </div>
       </main>
     </>
@@ -296,34 +313,38 @@ function Step({
   title,
   complete,
   delay = 0,
+  locked = false,
   children,
 }: {
   index: number;
   title: string;
   complete?: boolean;
   delay?: number;
+  locked?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <section
-      className={`luxe-panel luxe-hairline animate-rise mt-4 overflow-hidden rounded-3xl p-4 transition-all duration-500 ${
-        complete ? "border-gold/60 shadow-[0_0_36px_-14px_oklch(0.66_0.26_300/0.8)]" : ""
-      }`}
+      className={`animate-step-in relative mt-4 ${locked ? "opacity-60" : ""}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="mb-3 flex items-center gap-2">
-        <span
-          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[12px] font-extrabold transition-all ${
-            complete
-              ? "animate-reveal border-gold bg-gold/25 text-gold-soft shadow-[0_0_16px_oklch(0.66_0.26_300/0.7)]"
-              : "border-gold/40 bg-gold/10 text-gold-soft"
-          }`}
-        >
-          {complete ? "✓" : index}
-        </span>
-        <h2 className="text-sm font-extrabold text-foreground">{title}</h2>
+      <span
+        className={`absolute -start-7 top-4 flex h-7 w-7 items-center justify-center rounded-full border text-[11px] font-extrabold transition-all duration-500 ${
+          complete
+            ? "animate-reveal border-gold bg-gold/25 text-gold-soft shadow-[0_0_18px_oklch(0.66_0.26_300/0.8)]"
+            : "border-gold/35 bg-background text-gold-soft/70"
+        }`}
+      >
+        {complete ? "✓" : index}
+      </span>
+      <div
+        className={`luxe-panel luxe-hairline luxe-corners overflow-hidden rounded-3xl p-4 pt-5 transition-all duration-500 ${
+          complete ? "border-gold/55 shadow-[0_0_44px_-18px_oklch(0.66_0.26_300/0.9)]" : ""
+        }`}
+      >
+        <h2 className="mb-3 text-[13px] font-extrabold tracking-wide text-foreground">{title}</h2>
+        {children}
       </div>
-      {children}
     </section>
   );
 }
