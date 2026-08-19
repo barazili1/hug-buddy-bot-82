@@ -115,7 +115,7 @@ const kindByName: Record<string, PredictionKind> = {
   "Gems & Mines": "mines",
   "Goal!": "goal",
   Goal: "goal",
-  "Swamp Land": "cashout",
+  "Swamp Land": "swamp",
   "Eastern Nights": "eastern",
   "Apple of Fortune": "apple",
   Crystal: "none",
