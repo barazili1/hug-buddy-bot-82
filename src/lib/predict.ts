@@ -137,7 +137,12 @@ export type Prediction =
   | { kind: "slot"; reels: string[][]; spins: number; payline: number }
   | { kind: "wheel"; segment: string }
   | { kind: "cashout"; steps: { step: number; multiplier: string }[] }
-  | { kind: "eastern"; rows: { multiplier: string; safe: number }[]; cols: number }
+  | {
+      kind: "eastern";
+      rows: { multiplier: string; safe: number }[];
+      cols: number;
+      cashoutRow: number;
+    }
   | { kind: "none" }
   | { kind: "swamp"; rows: { multiplier: string; safe: number }[]; cols: number }
   | { kind: "gems"; grid: string[]; cluster: number[]; cols: number };
@@ -201,7 +206,7 @@ export function buildPrediction(kind: PredictionKind): Prediction {
         m *= rnd(1.25, 1.6);
         return row;
       }).reverse();
-      return { kind: "eastern", rows, cols };
+      return { kind: "eastern", rows, cols, cashoutRow: Math.floor(rnd(0, rows.length)) };
     }
     case "swamp": {
       const cols = 5;

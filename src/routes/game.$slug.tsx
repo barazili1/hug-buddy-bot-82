@@ -51,6 +51,9 @@ export const Route = createFileRoute("/game/$slug")({
 
 type Phase = "idle" | "waiting" | "ready";
 
+/** Games whose board is revealed one row at a time. */
+const rowKinds = ["eastern", "swamp", "cashout"];
+
 function fmt(ms: number) {
   const s = Math.max(0, Math.ceil(ms / 1000));
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
@@ -67,6 +70,22 @@ function GamePredictor() {
   const [total, setTotal] = useState(1);
   const timer = useRef<number | null>(null);
   const [placeholder, setPlaceholder] = useState<Prediction | null>(null);
+  const [revealCount, setRevealCount] = useState(0);
+  const isRowGame = rowKinds.includes(kind);
+
+  const revealNextRow = () => {
+    if (!prediction) {
+      setPrediction(buildPrediction(kind));
+      setRevealCount(1);
+      return;
+    }
+    setRevealCount((n) => n + 1);
+  };
+
+  const resetRows = () => {
+    setPrediction(null);
+    setRevealCount(0);
+  };
 
   useEffect(() => {
     setPlaceholder(buildPrediction(kind));
@@ -178,7 +197,11 @@ function GamePredictor() {
                   }`}
                 >
                   {(prediction ?? placeholder) && (
-                    <Board prediction={(prediction ?? placeholder)!} revealed={prediction !== null} />
+                    <Board
+                      prediction={(prediction ?? placeholder)!}
+                      revealed={prediction !== null}
+                      revealCount={isRowGame ? revealCount : Infinity}
+                    />
                   )}
                 </div>
               </>
@@ -186,7 +209,28 @@ function GamePredictor() {
 
             {/* Status / CTA */}
             <div className="relative mt-6">
-              {phase === "idle" && (
+              {isRowGame ? (
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={revealNextRow}
+                    className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                  >
+                    {revealCount === 0 ? "بدأ" : "الصف التالي"}
+                  </button>
+                  {revealCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={resetRows}
+                      className="w-full rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                    >
+                      توقع جديد
+                    </button>
+                  )}
+                </div>
+              ) : null}
+
+              {!isRowGame && phase === "idle" && (
                 <button
                   type="button"
                   onClick={start}
@@ -196,7 +240,7 @@ function GamePredictor() {
                 </button>
               )}
 
-              {phase === "waiting" && (
+              {!isRowGame && phase === "waiting" && (
                 <div className="rounded-2xl border border-primary/40 p-5 text-center">
                   <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                     Enter at
@@ -224,7 +268,7 @@ function GamePredictor() {
                 </div>
               )}
 
-              {phase === "ready" && (
+              {!isRowGame && phase === "ready" && (
                 <div className="animate-[pulse-glow_2s_ease-in-out_infinite] rounded-2xl border border-accent bg-accent/10 p-6 text-center shadow-[0_0_40px_oklch(0.8_0.18_180/0.5)]">
                   <p className="text-3xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.8)]" dir="rtl">
                     خش جيم 🚀
@@ -266,7 +310,15 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Board({ prediction, revealed }: { prediction: Prediction; revealed: boolean }) {
+function Board({
+  prediction,
+  revealed,
+  revealCount = Infinity,
+}: {
+  prediction: Prediction;
+  revealed: boolean;
+  revealCount?: number;
+}) {
   switch (prediction.kind) {
     case "crash":
       return (
@@ -423,7 +475,9 @@ function Board({ prediction, revealed }: { prediction: Prediction; revealed: boo
     case "swamp":
       return (
         <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
-          {prediction.rows.map((row, r) => (
+          {prediction.rows.map((row, r) => {
+            const shown = r >= prediction.rows.length - revealCount;
+            return (
             <div key={r} className="flex items-center gap-2">
               <span className="w-16 shrink-0 rounded-lg border border-accent/40 py-1 text-center text-[10px] font-bold text-accent">
                 {row.multiplier}
@@ -433,7 +487,7 @@ function Board({ prediction, revealed }: { prediction: Prediction; revealed: boo
                 style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
               >
                 {Array.from({ length: prediction.cols }, (_, c) => {
-                  const safe = c === row.safe;
+                  const safe = shown && c === row.safe;
                   return (
                     <div
                       key={c}
@@ -443,13 +497,14 @@ function Board({ prediction, revealed }: { prediction: Prediction; revealed: boo
                           : "border-border/50 opacity-45"
                       }`}
                     >
-                      {safe ? "🐸" : "🍃"}
+                      {safe ? "🐸" : shown ? "🍃" : ""}
                     </div>
                   );
                 })}
               </div>
             </div>
-          ))}
+            );
+          })}
           <p className="pt-1 text-center text-[11px] text-muted-foreground" dir="rtl">
             الورقة المضيئة في كل صف هي الطريق الآمن
           </p>
@@ -491,7 +546,7 @@ function Board({ prediction, revealed }: { prediction: Prediction; revealed: boo
     case "cashout":
       return (
         <div className="space-y-3">
-          {prediction.steps.map((s, i) => (
+          {prediction.steps.slice(0, revealCount).map((s, i) => (
             <div
               key={i}
               className="flex items-center justify-between gap-3 rounded-2xl border border-accent/50 bg-accent/10 px-4 py-3 shadow-[0_0_26px_oklch(0.8_0.18_180/0.35)]"
@@ -511,35 +566,44 @@ function Board({ prediction, revealed }: { prediction: Prediction; revealed: boo
     case "eastern":
       return (
         <div className="space-y-1.5 rounded-2xl border border-primary/40 bg-background/40 p-3">
-          {prediction.rows.map((row, r) => (
-            <div key={r} className="flex items-center gap-2">
-              <span className="w-16 shrink-0 rounded-lg border border-accent/40 py-1 text-center text-[10px] font-bold text-accent">
-                {row.multiplier}
-              </span>
-              <div
-                className="grid flex-1 gap-1.5"
-                style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
-              >
-                {Array.from({ length: prediction.cols }, (_, c) => {
-                  const safe = c === row.safe;
-                  return (
-                    <div
-                      key={c}
-                      className={`flex aspect-square items-center justify-center rounded-lg border text-xs ${
-                        safe
-                          ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
-                          : "border-border/50 opacity-40"
-                      }`}
-                    >
-                      {safe ? "✦" : ""}
-                    </div>
-                  );
-                })}
+          {prediction.rows.map((row, r) => {
+            const shown = r >= prediction.rows.length - revealCount;
+            const cashout = shown && r === prediction.cashoutRow;
+            return (
+              <div key={r} className="flex items-center gap-2">
+                <div
+                  className="grid flex-1 gap-1.5"
+                  style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
+                >
+                  {Array.from({ length: prediction.cols }, (_, c) => {
+                    const safe = shown && c === row.safe;
+                    return (
+                      <div
+                        key={c}
+                        className={`flex aspect-square items-center justify-center rounded-lg border text-xs ${
+                          safe
+                            ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
+                            : "border-border/50 opacity-40"
+                        }`}
+                      >
+                        {safe ? "✦" : ""}
+                      </div>
+                    );
+                  })}
+                </div>
+                {cashout && (
+                  <span
+                    className="shrink-0 rounded-full border border-accent bg-accent/10 px-2 py-1 text-[10px] font-extrabold text-accent shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
+                    dir="rtl"
+                  >
+                    اسحب الآن
+                  </span>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
           <p className="pt-1 text-center text-[11px] text-muted-foreground" dir="rtl">
-            ١٠ صفوف — الخانة المضيئة في كل صف هي المتوقّعة
+            اضغط الزر عشان يظهر صف واحد كل مرة — الخانة المضيئة هي المتوقّعة
           </p>
         </div>
       );
