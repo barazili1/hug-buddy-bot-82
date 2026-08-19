@@ -38,7 +38,7 @@ const TELEGRAM = "https://t.me/";
 
 function TermsPage() {
   const navigate = useNavigate();
-  const { userId, ready, save } = useUserId();
+  const { save } = useUserId();
   const [platform, setPlatform] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [value, setValue] = useState("");
@@ -46,10 +46,6 @@ function TermsPage() {
   const [checking, setChecking] = useState(false);
   const [joined, setJoined] = useState(false);
   const [registered, setRegistered] = useState(false);
-
-  useEffect(() => {
-    if (ready && userId) navigate({ to: "/lobby" });
-  }, [ready, userId, navigate]);
 
   useEffect(() => {
     if (!checking) return;
