@@ -306,19 +306,19 @@ function GamePredictor() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border/70 p-3 text-center backdrop-blur-md">
-      <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
-      <p className="mt-1 text-lg font-extrabold text-foreground">{value}</p>
+    <div className="luxe-panel p-3 text-center">
+      <p className="text-[9px] uppercase tracking-[0.28em] text-muted-foreground">{label}</p>
+      <p className="gold-text mt-1 text-lg font-black">{value}</p>
     </div>
   );
 }
 
 const cellBase =
-  "relative flex aspect-square items-center justify-center rounded-xl border border-border bg-gradient-to-b from-muted/60 to-muted/20 text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.06)] transition-all duration-300";
+  "relative flex aspect-square items-center justify-center rounded-xl border border-gold/20 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.75),oklch(0.11_0.03_300/0.85))] text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_6px_14px_-8px_oklch(0_0_0/0.9)] transition-all duration-300";
 const cellSafe =
-  "border-accent bg-accent/20 text-accent shadow-[0_0_22px_oklch(0.8_0.18_180/0.45),inset_0_1px_0_oklch(1_0_0/0.12)]";
+  "border-gold bg-[linear-gradient(180deg,oklch(0.85_0.15_88/0.35),oklch(0.62_0.13_75/0.25))] text-gold-soft shadow-[0_0_26px_oklch(0.85_0.15_88/0.55),inset_0_1px_0_oklch(1_0_0/0.25)]";
 const cellIdle = "text-muted-foreground/70";
-const cellHidden = "border-dashed border-border/70 text-muted-foreground/40";
+const cellHidden = "border-dashed border-gold/15 text-muted-foreground/30 opacity-70";
 
 function Board({
   prediction,
