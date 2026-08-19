@@ -355,10 +355,12 @@ function Board({
   prediction,
   revealed,
   revealCount = Infinity,
+  appleRows = null,
 }: {
   prediction: Prediction;
   revealed: boolean;
   revealCount?: number;
+  appleRows?: boolean[][] | null;
 }) {
   switch (prediction.kind) {
     case "crash":
@@ -614,7 +616,8 @@ function Board({
             return (
               <div key={r} className={`flex justify-center gap-2 ${shown ? "animate-rise" : ""}`}>
                 {Array.from({ length: row.cols }, (_, c) => {
-                  const safe = shown && c === row.safe;
+                  const feedRow = appleRows?.[r];
+                  const safe = shown && (feedRow ? feedRow[c] === true : c === row.safe);
                   return (
                     <div
                       key={c}
