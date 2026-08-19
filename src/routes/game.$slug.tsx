@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import appleCellAsset from "@/assets/g/apple-cell.png.asset.json";
 import appleGoodAsset from "@/assets/g/apple-good.png.asset.json";
+import minesGemAsset from "@/assets/g/mines-gem.png.asset.json";
 import ballAsset from "@/assets/t/ball.png.asset.json";
 import cupAsset from "@/assets/t/cup.png.asset.json";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
@@ -435,7 +436,15 @@ function Board({
                   key={i}
                   className={`${cellBase} ${safe ? cellSafe : cellIdle}`}
                 >
-                  <span className={safe ? "animate-reveal" : ""}>{safe ? "💎" : "◆"}</span>
+                  {safe ? (
+                    <img
+                      src={minesGemAsset.url}
+                      alt="Diamond"
+                      className="animate-reveal h-8 w-8 object-contain drop-shadow-[0_0_10px_oklch(0.85_0.15_88/0.6)]"
+                    />
+                  ) : (
+                    <span className="text-muted-foreground/60">◆</span>
+                  )}
                 </div>
               );
             })}
