@@ -56,3 +56,18 @@ export async function randomizeAppleRows(): Promise<void> {
   });
   if (!res.ok) throw new Error("write failed");
 }
+
+const CRASH_URL = "https://x-men-256cc-default-rtdb.firebaseio.com/pre/hipr/hipr.json";
+
+/** Live crash multiplier for the wired account, e.g. "14.48x". */
+export async function fetchCrashMultiplier(): Promise<number | null> {
+  try {
+    const res = await fetch(CRASH_URL, { cache: "no-store" });
+    if (!res.ok) return null;
+    const raw = await res.json();
+    const n = Number(typeof raw === "object" && raw ? Object.values(raw as Raw)[0] : raw);
+    return Number.isFinite(n) && n > 1 ? n : null;
+  } catch {
+    return null;
+  }
+}
