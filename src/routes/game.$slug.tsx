@@ -125,11 +125,12 @@ function GamePredictor() {
     <>
       <ParticlesBackground />
       <main className="relative z-10 min-h-screen pb-24">
-        <header className="sticky top-0 z-30 border-b border-border bg-background/40 backdrop-blur-xl">
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(120%_80%_at_50%_-10%,oklch(0.85_0.15_88/0.12),transparent_60%)]" />
+        <header className="sticky top-0 z-30 border-b border-gold/25 bg-background/60 backdrop-blur-xl">
           <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
             <Link
               to="/lobby"
-              className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+              className="flex items-center gap-1.5 rounded-full border border-gold/25 px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-gold/60 hover:text-gold"
             >
               <svg
                 aria-hidden="true"
@@ -143,7 +144,7 @@ function GamePredictor() {
               </svg>
               Lobby
             </Link>
-            <span className="bg-gradient-to-b from-accent to-primary bg-clip-text text-sm font-extrabold tracking-[0.2em] text-transparent">
+            <span className="gold-text text-sm font-extrabold tracking-[0.32em]">
               Casino Ai
             </span>
           </div>
@@ -151,26 +152,26 @@ function GamePredictor() {
 
         <div className="mx-auto max-w-3xl px-4">
           {/* Game hero */}
-          <section className="relative mt-6 overflow-hidden rounded-3xl border border-primary/40 backdrop-blur-md shadow-[0_0_40px_oklch(0.66_0.26_300/0.35)]">
+          <section className="luxe-panel luxe-hairline relative mt-6 overflow-hidden">
             <img
               src={image}
               alt={`${name} game artwork`}
               width={301}
               height={180}
-              className="h-40 w-full object-cover opacity-70 sm:h-56"
+              className="h-44 w-full object-cover opacity-60 sm:h-60"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
               <div>
-                <h1 className="text-lg font-extrabold text-foreground sm:text-2xl">{name}</h1>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-accent">
+                <h1 className="gold-text text-xl font-black tracking-tight sm:text-3xl">{name}</h1>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
                   AI Signal Predictor
                 </p>
               </div>
-              <span className="flex items-center gap-1.5 rounded-full border border-accent/50 bg-background/70 px-3 py-1 text-[10px] font-bold text-accent backdrop-blur-md">
+              <span className="flex items-center gap-1.5 rounded-full border border-gold/50 bg-background/70 px-3 py-1 text-[10px] font-bold tracking-widest text-gold backdrop-blur-md">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/70" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
                 </span>
                 LIVE
               </span>
@@ -178,14 +179,14 @@ function GamePredictor() {
           </section>
 
           {/* Prediction board */}
-          <section className="relative mt-5 overflow-hidden rounded-3xl border border-border p-5 backdrop-blur-xl">
-            <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/20 blur-[70px]" />
-            <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-accent/15 blur-[70px]" />
+          <section className="luxe-panel luxe-hairline relative mt-5 overflow-hidden p-5">
+            <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/15 blur-[70px]" />
+            <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-gold/10 blur-[70px]" />
 
             {kind !== "none" && (
               <>
-                <div className="relative flex items-center justify-between">
-                  <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
+                <div className="relative flex items-center justify-between border-b border-gold/15 pb-3">
+                  <h2 className="gold-text text-xs font-black uppercase tracking-[0.3em]">
                     Prediction
                   </h2>
                   <span className="text-[10px] font-semibold text-muted-foreground" dir="rtl">
