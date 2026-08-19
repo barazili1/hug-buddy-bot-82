@@ -31,10 +31,10 @@ export const Route = createFileRoute("/terms")({
 });
 
 const platforms = [
-  { id: "gooobet", name: "Gooobet", short: "GB", url: "https://gooobet.com" },
-  { id: "paripulse", name: "Paripulse", short: "PP", url: "https://paripulse.com" },
-  { id: "megapari", name: "Megapari", short: "MP", url: "https://megapari.com" },
-  { id: "winwin", name: "Winwin", short: "WW", url: "https://winwin.bet" },
+  { id: "gooobet", name: "Gooobet", logo: gooobetLogo.url, url: "https://gooobet.com" },
+  { id: "paripulse", name: "Paripulse", logo: paripulseLogo.url, url: "https://paripulse.com" },
+  { id: "megapari", name: "Megapari", logo: megapariLogo.url, url: "https://megapari.com" },
+  { id: "winwin", name: "Winwin", logo: winwinLogo.url, url: "https://winwin.bet" },
 ];
 
 const PROMO = "Gooo33";
