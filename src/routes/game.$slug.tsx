@@ -573,7 +573,7 @@ function Board({
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
-              <div key={r} className="flex justify-center gap-2">
+              <div key={r} className={`flex justify-center gap-2 ${shown ? "animate-rise" : ""}`}>
                 {Array.from({ length: row.cols }, (_, c) => {
                   const safe = shown && c === row.safe;
                   return (
@@ -590,7 +590,7 @@ function Board({
                         alt={safe ? "تفاحة سليمة" : "خانة"}
                         width={40}
                         height={40}
-                        className={`h-9 w-9 object-contain ${safe ? "" : "opacity-80"}`}
+                        className={`h-9 w-9 object-contain ${safe ? "animate-reveal" : "opacity-80"}`}
                       />
                     </div>
                   );
