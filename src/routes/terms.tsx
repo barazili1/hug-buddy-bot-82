@@ -31,14 +31,14 @@ export const Route = createFileRoute("/terms")({
 });
 
 const platforms = [
-  { id: "gooobet", name: "Gooobet", logo: gooobetLogo.url, url: "https://gooobet.com" },
-  { id: "paripulse", name: "Paripulse", logo: paripulseLogo.url, url: "https://paripulse.com" },
-  { id: "megapari", name: "Megapari", logo: megapariLogo.url, url: "https://megapari.com" },
-  { id: "winwin", name: "Winwin", logo: winwinLogo.url, url: "https://winwin.bet" },
+  { id: "gooobet", name: "Gooobet", logo: gooobetLogo.url, url: "https://promogooo.click/Gooo33" },
+  { id: "paripulse", name: "Paripulse", logo: paripulseLogo.url, url: "https://refpa22168.com/L?tag=d_3638295m_64499c_&site=3638295&ad=64499" },
+  { id: "megapari", name: "Megapari", logo: megapariLogo.url, url: "https://2787591.megapari-228091.com" },
+  { id: "winwin", name: "Winwin", logo: winwinLogo.url, url: "https://refpa98980.com/L?tag=d_5876143m_94904c_&site=5876143&ad=94904" },
 ];
 
 const PROMO = "Gooo33";
-const TELEGRAM = "https://t.me/";
+const TELEGRAM = "https://t.me/+SHa12LG9SFQ3YWE0";
 
 function TermsPage() {
   const navigate = useNavigate();
