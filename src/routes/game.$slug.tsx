@@ -51,6 +51,9 @@ export const Route = createFileRoute("/game/$slug")({
 
 type Phase = "idle" | "waiting" | "ready";
 
+/** Games whose board is revealed one row at a time. */
+const rowKinds = ["eastern", "swamp", "cashout"];
+
 function fmt(ms: number) {
   const s = Math.max(0, Math.ceil(ms / 1000));
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
@@ -67,6 +70,22 @@ function GamePredictor() {
   const [total, setTotal] = useState(1);
   const timer = useRef<number | null>(null);
   const [placeholder, setPlaceholder] = useState<Prediction | null>(null);
+  const [revealCount, setRevealCount] = useState(0);
+  const isRowGame = rowKinds.includes(kind);
+
+  const revealNextRow = () => {
+    if (!prediction) {
+      setPrediction(buildPrediction(kind));
+      setRevealCount(1);
+      return;
+    }
+    setRevealCount((n) => n + 1);
+  };
+
+  const resetRows = () => {
+    setPrediction(null);
+    setRevealCount(0);
+  };
 
   useEffect(() => {
     setPlaceholder(buildPrediction(kind));
@@ -178,7 +197,11 @@ function GamePredictor() {
                   }`}
                 >
                   {(prediction ?? placeholder) && (
-                    <Board prediction={(prediction ?? placeholder)!} revealed={prediction !== null} />
+                    <Board
+                      prediction={(prediction ?? placeholder)!}
+                      revealed={prediction !== null}
+                      revealCount={isRowGame ? revealCount : Infinity}
+                    />
                   )}
                 </div>
               </>
@@ -186,7 +209,28 @@ function GamePredictor() {
 
             {/* Status / CTA */}
             <div className="relative mt-6">
-              {phase === "idle" && (
+              {isRowGame ? (
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={revealNextRow}
+                    className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                  >
+                    {revealCount === 0 ? "بدأ" : "الصف التالي"}
+                  </button>
+                  {revealCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={resetRows}
+                      className="w-full rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                    >
+                      توقع جديد
+                    </button>
+                  )}
+                </div>
+              ) : null}
+
+              {!isRowGame && phase === "idle" && (
                 <button
                   type="button"
                   onClick={start}
@@ -196,7 +240,7 @@ function GamePredictor() {
                 </button>
               )}
 
-              {phase === "waiting" && (
+              {!isRowGame && phase === "waiting" && (
                 <div className="rounded-2xl border border-primary/40 p-5 text-center">
                   <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                     Enter at
@@ -224,7 +268,7 @@ function GamePredictor() {
                 </div>
               )}
 
-              {phase === "ready" && (
+              {!isRowGame && phase === "ready" && (
                 <div className="animate-[pulse-glow_2s_ease-in-out_infinite] rounded-2xl border border-accent bg-accent/10 p-6 text-center shadow-[0_0_40px_oklch(0.8_0.18_180/0.5)]">
                   <p className="text-3xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.8)]" dir="rtl">
                     خش جيم 🚀
