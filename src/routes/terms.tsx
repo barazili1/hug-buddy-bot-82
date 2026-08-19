@@ -157,13 +157,17 @@ function TermsPage() {
                     }`}
                   >
                     <span
-                      className={`flex h-9 w-9 items-center justify-center rounded-full border text-[11px] font-extrabold tracking-wider transition-all ${
+                      className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition-all ${
                         active
-                          ? "animate-reveal border-gold bg-gold/20 text-gold-soft shadow-[0_0_18px_oklch(0.66_0.26_300/0.7)]"
-                          : "border-gold/30 bg-background/60 text-muted-foreground"
+                          ? "animate-reveal border-gold shadow-[0_0_18px_oklch(0.66_0.26_300/0.7)]"
+                          : "border-gold/30 bg-background/60"
                       }`}
                     >
-                      {p.short}
+                      <img
+                        src={p.logo}
+                        alt={p.name}
+                        className="h-full w-full object-cover"
+                      />
                     </span>
                     <span className="w-full truncate px-1 text-center text-[10px] font-bold text-foreground">
                       {p.name}
