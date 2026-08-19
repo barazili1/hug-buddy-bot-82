@@ -393,3 +393,69 @@
     animation-play-state: paused;
   }
 }
+
+@keyframes gold-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@utility gold-shimmer-text {
+  background: linear-gradient(
+    100deg,
+    oklch(0.66 0.26 300),
+    oklch(0.95 0.09 320),
+    oklch(0.66 0.26 300)
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 4.5s linear infinite;
+}
+
+@utility luxe-corners {
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 1px solid oklch(0.86 0.16 320 / 0.55);
+    pointer-events: none;
+  }
+  &::before {
+    top: 10px;
+    inset-inline-start: 10px;
+    border-inline-end: none;
+    border-bottom: none;
+    border-start-start-radius: 10px;
+  }
+  &::after {
+    bottom: 10px;
+    inset-inline-end: 10px;
+    border-inline-start: none;
+    border-top: none;
+    border-end-end-radius: 10px;
+  }
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@utility animate-step-in {
+  animation: step-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
