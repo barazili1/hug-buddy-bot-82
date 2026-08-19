@@ -346,7 +346,7 @@ function Board({
             <p className="relative text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               Predicted crash
             </p>
-            <p className="relative mt-1 font-mono text-5xl font-extrabold text-accent drop-shadow-[0_0_22px_oklch(0.8_0.18_180/0.7)]">
+            <p className="relative mt-1 font-mono text-5xl font-extrabold gold-text">
               {prediction.multiplier}
             </p>
           </div>
@@ -457,7 +457,7 @@ function Board({
                   key={i}
                   className={`flex aspect-[3/4] flex-col items-center justify-center gap-1 rounded-2xl border ${
                     hit
-                      ? "border-accent bg-accent/10 shadow-[0_0_30px_oklch(0.8_0.18_180/0.55)]"
+                      ? "border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
                       : "border-border bg-muted/25"
                   }`}
                 >
@@ -547,10 +547,10 @@ function Board({
           {prediction.steps.slice(0, revealCount).map((s, i) => (
             <div
               key={i}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-accent/50 bg-accent/10 px-4 py-3 shadow-[0_0_26px_oklch(0.8_0.18_180/0.35)]"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-gold/50 bg-gold/10 px-4 py-3 shadow-[0_0_26px_oklch(0.85_0.15_88/0.3)]"
               dir="rtl"
             >
-              <span className="text-sm font-extrabold text-accent">اسحب الآن</span>
+              <span className="text-sm font-extrabold text-gold">اسحب الآن</span>
               <span className="font-mono text-xs text-muted-foreground">الخطوة {s.step}</span>
               <span className="font-mono text-lg font-extrabold text-foreground">{s.multiplier}</span>
             </div>
@@ -575,7 +575,7 @@ function Board({
                       key={c}
                       className={`flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 ${
                         safe
-                          ? "border-accent bg-accent/20 shadow-[0_0_18px_oklch(0.8_0.18_180/0.55)]"
+                          ? "border-gold bg-gold/20 shadow-[0_0_20px_oklch(0.85_0.15_88/0.55)]"
                           : "border-border bg-muted/30"
                       }`}
                     >
@@ -626,7 +626,7 @@ function Board({
                 </div>
                 {cashout && (
                   <span
-                    className="shrink-0 rounded-full border border-accent bg-accent/10 px-2 py-1 text-[10px] font-extrabold text-accent shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
+                    className="shrink-0 rounded-full border border-gold bg-gold/10 px-2 py-1 text-[10px] font-extrabold text-gold shadow-[0_0_18px_oklch(0.85_0.15_88/0.5)]"
                     dir="rtl"
                   >
                     اسحب الآن
@@ -652,7 +652,7 @@ function Board({
                     key={r}
                     className={`flex aspect-square items-center justify-center rounded-xl border text-2xl ${
                       r === prediction.payline - 1
-                        ? "border-accent bg-accent/10 shadow-[0_0_22px_oklch(0.8_0.18_180/0.45)]"
+                        ? "border-gold bg-gold/10 shadow-[0_0_24px_oklch(0.85_0.15_88/0.45)]"
                         : "border-border/50 opacity-60"
                     }`}
                   >
