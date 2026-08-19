@@ -1,9 +1,9 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
 import logo from "@/assets/casino-ai-logo.png";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
-import { UserIdGate, useUserId } from "@/components/UserIdGate";
+import { useUserId } from "@/components/UserIdGate";
 import { games, type Game } from "@/data/games";
 import { slugify } from "@/lib/predict";
 import { getLuckMap, getLuckSlot, luckShortLabels, type LuckInfo } from "@/lib/luck";
@@ -47,7 +47,12 @@ function Lobby() {
   const [luckFilter, setLuckFilter] = useState<LuckFilter>("all");
   const [query, setQuery] = useState("");
   const [usersOnline, setUsersOnline] = useState(2417);
-  const { userId, ready, save } = useUserId();
+  const { userId, ready } = useUserId();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ready && !userId) navigate({ to: "/terms" });
+  }, [ready, userId, navigate]);
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -109,25 +114,24 @@ function Lobby() {
   return (
     <>
       <ParticlesBackground />
-      <UserIdGate ready={ready} userId={userId} onSave={save} />
       <main className="relative z-10 min-h-screen pb-20">
         {/* Top bar */}
         <header className="sticky top-0 z-30 border-b border-border bg-background/40 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-            <span className="bg-gradient-to-b from-accent to-primary bg-clip-text text-base font-extrabold tracking-[0.2em] text-transparent">
+          <div className="mx-auto flex max-w-6xl flex-nowrap items-center justify-between gap-1.5 px-3 py-2">
+            <span className="shrink-0 bg-gradient-to-b from-accent to-primary bg-clip-text text-[11px] font-extrabold tracking-[0.14em] text-transparent">
               Smart Odds
             </span>
             {userId ? (
-              <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-[11px] font-bold tracking-widest text-foreground">
+              <span className="max-w-[38%] truncate rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[9px] font-bold tracking-wider text-foreground">
                 ID: {userId}
               </span>
             ) : null}
-            <span className="flex items-center gap-2 rounded-full border border-border px-3 py-1 text-[11px] font-medium text-muted-foreground">
-              <span className="relative flex h-2 w-2">
+            <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-border px-2 py-0.5 text-[9px] font-medium text-muted-foreground">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               </span>
-              Users online :{" "}
+              Online:{" "}
               <span className="text-foreground">{usersOnline.toLocaleString("en-US")}</span>
             </span>
           </div>
