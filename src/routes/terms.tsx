@@ -288,17 +288,32 @@ function TermsPage() {
 function Step({
   index,
   title,
+  complete,
+  delay = 0,
   children,
 }: {
   index: number;
   title: string;
+  complete?: boolean;
+  delay?: number;
   children: React.ReactNode;
 }) {
   return (
-    <section className="luxe-panel animate-rise mt-4 rounded-3xl p-4">
+    <section
+      className={`luxe-panel luxe-hairline animate-rise mt-4 overflow-hidden rounded-3xl p-4 transition-all duration-500 ${
+        complete ? "border-gold/60 shadow-[0_0_36px_-14px_oklch(0.66_0.26_300/0.8)]" : ""
+      }`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
       <div className="mb-3 flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-[12px] font-extrabold text-gold-soft">
-          {index}
+        <span
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[12px] font-extrabold transition-all ${
+            complete
+              ? "animate-reveal border-gold bg-gold/25 text-gold-soft shadow-[0_0_16px_oklch(0.66_0.26_300/0.7)]"
+              : "border-gold/40 bg-gold/10 text-gold-soft"
+          }`}
+        >
+          {complete ? "✓" : index}
         </span>
         <h2 className="text-sm font-extrabold text-foreground">{title}</h2>
       </div>
