@@ -34,7 +34,7 @@ function Splash() {
       setProgress(pct);
     }, 30);
     const timeout = window.setTimeout(() => {
-      navigate({ to: "/lobby" });
+      navigate({ to: "/terms" });
     }, 3000);
     return () => {
       window.clearInterval(id);
