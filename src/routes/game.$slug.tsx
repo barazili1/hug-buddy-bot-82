@@ -12,6 +12,7 @@ import {
   APPLE_FEED_USER_ID,
   fetchAppleRows,
   randomizeAppleRows,
+  fetchCrashMultiplier,
 } from "@/lib/appleFirebase";
 import {
   buildEnterDelayMs,
