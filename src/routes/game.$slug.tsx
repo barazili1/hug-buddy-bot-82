@@ -23,9 +23,9 @@ export const Route = createFileRoute("/game/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Unavailable — Casino Ai" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Unavailable — Smart Odds" }, { name: "robots", content: "noindex" }] };
     }
-    const title = `${loaderData.name} predictor — Casino Ai`;
+    const title = `${loaderData.name} predictor — Smart Odds`;
     const description = `AI signal predictor for ${loaderData.name}: get a predicted round and the best moment to enter the game.`;
     return {
       meta: [
@@ -145,7 +145,7 @@ function GamePredictor() {
               Lobby
             </Link>
             <span className="gold-text text-sm font-extrabold tracking-[0.32em]">
-              Casino Ai
+              Smart Odds
             </span>
           </div>
         </header>

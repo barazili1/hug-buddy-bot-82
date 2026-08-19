@@ -10,16 +10,16 @@ import { getLuckMap, getLuckSlot, luckShortLabels, type LuckInfo } from "@/lib/l
 export const Route = createFileRoute("/lobby")({
   head: () => ({
     meta: [
-      { title: "Lobby — Casino Ai" },
+      { title: "Lobby — Smart Odds" },
       {
         name: "description",
         content:
-          "Browse casino and instant win games in the Casino Ai lobby, from crash classics to slots and hold-and-win hits.",
+          "Browse casino and instant win games in the Smart Odds lobby, from crash classics to slots and hold-and-win hits.",
       },
-      { property: "og:title", content: "Lobby — Casino Ai" },
+      { property: "og:title", content: "Lobby — Smart Odds" },
       {
         property: "og:description",
-        content: "Browse casino and instant win games in the Casino Ai lobby.",
+        content: "Browse casino and instant win games in the Smart Odds lobby.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -112,7 +112,7 @@ function Lobby() {
         <header className="sticky top-0 z-30 border-b border-border bg-background/40 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <span className="bg-gradient-to-b from-accent to-primary bg-clip-text text-base font-extrabold tracking-[0.2em] text-transparent">
-              Casino Ai
+              Smart Odds
             </span>
             <span className="flex items-center gap-2 rounded-full border border-border px-3 py-1 text-[11px] font-medium text-muted-foreground">
               <span className="relative flex h-2 w-2">
@@ -131,13 +131,13 @@ function Lobby() {
             <div className="pointer-events-none absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/25 blur-[80px]" />
             <img
               src={logo}
-              alt="Casino Ai logo"
+              alt="Smart Odds logo"
               width={816}
               height={816}
               className="relative w-24 drop-shadow-[0_0_38px_oklch(0.66_0.26_300/0.65)]"
             />
             <h1 className="relative mt-3 bg-gradient-to-b from-accent via-foreground to-primary bg-clip-text text-3xl font-extrabold tracking-[0.2em] text-transparent">
-              Casino Ai
+              Smart Odds
             </h1>
             <p className="relative mt-2 text-center text-xs text-muted-foreground">
               {casinoGames.length} casino · {instantGames.length} instant · live multipliers

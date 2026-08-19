@@ -185,7 +185,7 @@ export function buildPrediction(kind: PredictionKind): Prediction {
       return { kind: "mines", safe: [...safe], total };
     }
     case "goal":
-      return { kind: "goal", pick: Math.floor(rnd(0, 3)), corners: Math.round(rnd(2, 4)) };
+      return { kind: "goal", pick: Math.floor(rnd(0, 2)), corners: Math.round(rnd(2, 4)) };
     case "wheel":
       return { kind: "wheel", segment: `x${Math.round(rnd(2, 40))}` };
     case "none":
@@ -215,7 +215,7 @@ export function buildPrediction(kind: PredictionKind): Prediction {
     case "apple": {
       let m = rnd(1.2, 1.45);
       const rows = Array.from({ length: 10 }, () => {
-        const cols = 4;
+        const cols = 5;
         const row = { multiplier: `x${m.toFixed(2)}`, safe: Math.floor(rnd(0, cols)), cols };
         m *= rnd(1.3, 1.6);
         return row;

@@ -7,16 +7,16 @@ import { ParticlesBackground } from "@/components/ParticlesBackground";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Casino Ai — Crash Games Lobby" },
+      { title: "Smart Odds — Crash Games Lobby" },
       {
         name: "description",
         content:
-          "Casino Ai: enter the lobby and play the hottest crash and instant win games.",
+          "Smart Odds: enter the lobby and play the hottest crash and instant win games.",
       },
-      { property: "og:title", content: "Casino Ai — Crash Games Lobby" },
+      { property: "og:title", content: "Smart Odds — Crash Games Lobby" },
       {
         property: "og:description",
-        content: "Enter the Casino Ai lobby and play the hottest crash games.",
+        content: "Enter the Smart Odds lobby and play the hottest crash games.",
       },
     ],
   }),
@@ -48,14 +48,14 @@ function Splash() {
       <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8">
         <img
           src={logo}
-          alt="Casino Ai logo"
+          alt="Smart Odds logo"
           width={816}
           height={816}
           className="w-40 animate-pulse-glow drop-shadow-[0_0_45px_oklch(0.66_0.26_300/0.6)]"
         />
 
         <h1 className="mt-6 bg-gradient-to-b from-accent to-primary bg-clip-text text-4xl font-extrabold tracking-[0.15em] text-transparent">
-          Casino Ai
+          Smart Odds
         </h1>
 
         <div className="mt-10 w-full max-w-xs">
