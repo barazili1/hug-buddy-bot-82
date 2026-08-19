@@ -44,6 +44,8 @@ function TermsPage() {
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [checking, setChecking] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   useEffect(() => {
     if (ready && userId) navigate({ to: "/lobby" });
@@ -55,16 +57,45 @@ function TermsPage() {
       save(value);
       setChecking(false);
       navigate({ to: "/lobby" });
-    }, 2600);
+    }, 3200);
     return () => window.clearTimeout(t);
   }, [checking, value, save, navigate]);
 
   const selected = platforms.find((p) => p.id === platform);
+  const idValid = /^\d{10,14}$/.test(value);
+  const done = [Boolean(platform), registered, joined, copied, true, idValid].filter(
+    Boolean,
+  ).length;
+  const progress = Math.round((done / 6) * 100);
 
   return (
     <>
       <ParticlesBackground />
+      {checking ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 p-5 backdrop-blur-md">
+          <div
+            dir="rtl"
+            className="luxe-panel luxe-ring animate-rise w-full max-w-sm overflow-hidden p-7 text-center"
+          >
+            <div className="relative mx-auto h-16 w-16">
+              <span className="absolute inset-0 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
+              <span className="animate-spin-slow absolute inset-2 rounded-full border border-dashed border-gold-soft/50" />
+              <span className="animate-pulse-glow absolute inset-5 rounded-full bg-gold/40 blur-[6px]" />
+            </div>
+            <p className="gold-text mt-5 text-sm font-extrabold tracking-wide">
+              جارٍ ربط حسابك بالمنصة المختارة
+            </p>
+            <p className="mt-1.5 text-[11px] text-muted-foreground">
+              {selected ? selected.name : ""} — الرجاء الانتظار…
+            </p>
+            <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-foreground/10">
+              <span className="luxe-sheen block h-full w-full luxe-aurora" />
+            </div>
+          </div>
+        </div>
+      ) : null}
       <main className="relative z-10 min-h-screen pb-16" dir="rtl">
+        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[420px] luxe-aurora blur-[90px] opacity-40" />
         {/* Top bar */}
         <header className="sticky top-0 z-30 border-b border-gold/15 bg-background/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-2">
@@ -74,6 +105,12 @@ function TermsPage() {
             <span className="rounded-full border border-gold/30 px-2.5 py-0.5 text-[10px] font-bold tracking-widest text-gold-soft">
               الشروط
             </span>
+          </div>
+          <div className="h-0.5 w-full bg-foreground/5">
+            <span
+              className="block h-full luxe-aurora transition-[width] duration-700"
+              style={{ width: `${progress}%` }}
+            />
           </div>
         </header>
 
@@ -86,7 +123,7 @@ function TermsPage() {
               alt="Smart Odds logo"
               width={816}
               height={816}
-              className="relative w-20 drop-shadow-[0_0_38px_oklch(0.66_0.26_300/0.6)]"
+              className="animate-float relative w-20 drop-shadow-[0_0_38px_oklch(0.66_0.26_300/0.6)]"
             />
             <h1 className="gold-text relative mt-3 text-2xl font-extrabold tracking-[0.2em]">
               Smart Odds
@@ -94,10 +131,13 @@ function TermsPage() {
             <p className="relative mt-1.5 text-center text-[11px] text-muted-foreground">
               أكمل الشروط التالية لتفعيل التوقعات بنسبة دقة 90%
             </p>
+            <span className="luxe-ring mt-3 rounded-full border border-gold/25 bg-background/40 px-4 py-1 text-[10px] font-bold tracking-[0.2em] text-gold-soft">
+              {done} / 6 مكتمل
+            </span>
           </section>
 
           {/* 1 - platforms */}
-          <Step index={1} title="اختر المنصة">
+          <Step index={1} title="اختر المنصة" complete={Boolean(platform)} delay={0}>
             <div className="flex flex-wrap justify-center gap-3">
               {platforms.map((p) => {
                 const active = platform === p.id;
@@ -105,18 +145,21 @@ function TermsPage() {
                   <button
                     key={p.id}
                     type="button"
-                    onClick={() => setPlatform(p.id)}
+                    onClick={() => {
+                      setPlatform(p.id);
+                      setRegistered(false);
+                    }}
                     style={{ width: 100, height: 80 }}
-                    className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 ${
+                    className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
                       active
-                        ? "border-gold bg-[linear-gradient(180deg,oklch(0.85_0.15_88/0.22),oklch(0.62_0.13_75/0.14))] shadow-[0_0_26px_oklch(0.85_0.15_88/0.45)]"
+                        ? "luxe-ring border-gold bg-[linear-gradient(180deg,oklch(0.66_0.26_300/0.25),oklch(0.5_0.22_295/0.14))] shadow-[0_0_30px_oklch(0.66_0.26_300/0.55)]"
                         : "border-gold/20 bg-background/30 hover:border-gold/60"
                     }`}
                   >
                     <span
-                      className={`flex h-9 w-9 items-center justify-center rounded-full border text-[11px] font-extrabold tracking-wider ${
+                      className={`flex h-9 w-9 items-center justify-center rounded-full border text-[11px] font-extrabold tracking-wider transition-all ${
                         active
-                          ? "border-gold bg-gold/20 text-gold-soft"
+                          ? "animate-reveal border-gold bg-gold/20 text-gold-soft shadow-[0_0_18px_oklch(0.66_0.26_300/0.7)]"
                           : "border-gold/30 bg-background/60 text-muted-foreground"
                       }`}
                     >
@@ -129,40 +172,47 @@ function TermsPage() {
             </div>
           </Step>
 
-          {/* 2 - download */}
-          <Step index={2} title={`تحميل منصة ${selected ? selected.name : "( اختر منصة أولاً )"}`}>
+          {/* 2 - register */}
+          <Step
+            index={2}
+            title={`التسجيل في منصة ${selected ? selected.name : "( اختر منصة أولاً )"}`}
+            complete={registered}
+            delay={60}
+          >
             <a
               href={selected?.url ?? "#"}
               target="_blank"
               rel="noreferrer"
-              className={`block w-full rounded-2xl px-4 py-3 text-center text-sm font-extrabold transition-transform active:scale-[0.98] ${
+              onClick={() => selected && setRegistered(true)}
+              className={`luxe-sheen block w-full rounded-2xl px-4 py-3 text-center text-sm font-extrabold transition-transform active:scale-[0.98] ${
                 selected
                   ? "bg-foreground text-background"
                   : "pointer-events-none bg-foreground/30 text-background/60"
               }`}
             >
-              تحميل
+              التسجيل
             </a>
           </Step>
 
           {/* 3 - telegram */}
-          <Step index={3} title="الانضمام إلى قناة التليجرام">
+          <Step index={3} title="الانضمام إلى قناة التليجرام" complete={joined} delay={120}>
             <a
               href={TELEGRAM}
               target="_blank"
               rel="noreferrer"
-              className="block w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
+              onClick={() => setJoined(true)}
+              className="luxe-sheen block w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
             >
               انضمام
             </a>
           </Step>
 
           {/* 4 - promo */}
-          <Step index={4} title="إنشاء حساب بالبروموكود الخاص بنا">
+          <Step index={4} title="إنشاء حساب بالبروموكود الخاص بنا" complete={copied} delay={180}>
             <div className="flex items-center gap-2">
               <span
                 dir="ltr"
-                className="flex-1 rounded-2xl border border-gold/30 bg-background/50 px-4 py-3 text-center text-base font-extrabold tracking-[0.25em] text-gold-soft"
+                className="luxe-ring flex-1 rounded-2xl border border-gold/30 bg-background/50 px-4 py-3 text-center text-base font-extrabold tracking-[0.25em] text-gold-soft"
               >
                 {PROMO}
               </span>
@@ -181,12 +231,12 @@ function TermsPage() {
           </Step>
 
           {/* 5 - deposit */}
-          <Step index={5} title="إيداع مبلغ بحد أدنى">
+          <Step index={5} title="إيداع مبلغ بحد أدنى" complete delay={240}>
             <div className="grid grid-cols-2 gap-3">
               {["300 جنيه", "6 دولار"].map((amount) => (
                 <span
                   key={amount}
-                  className="rounded-2xl border border-gold/25 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.6),oklch(0.11_0.03_300/0.8))] px-4 py-3 text-center text-sm font-extrabold text-gold-soft"
+                  className="rounded-2xl border border-gold/25 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.6),oklch(0.11_0.03_300/0.8))] px-4 py-3 text-center text-sm font-extrabold text-gold-soft transition-transform hover:-translate-y-0.5"
                 >
                   {amount}
                 </span>
@@ -195,7 +245,7 @@ function TermsPage() {
           </Step>
 
           {/* 6 - id */}
-          <Step index={6} title="إدخال الـ ID الخاص بك">
+          <Step index={6} title="إدخال الـ ID الخاص بك" complete={idValid} delay={300}>
             <input
               value={value}
               onChange={(e) => {
@@ -238,17 +288,32 @@ function TermsPage() {
 function Step({
   index,
   title,
+  complete,
+  delay = 0,
   children,
 }: {
   index: number;
   title: string;
+  complete?: boolean;
+  delay?: number;
   children: React.ReactNode;
 }) {
   return (
-    <section className="luxe-panel animate-rise mt-4 rounded-3xl p-4">
+    <section
+      className={`luxe-panel luxe-hairline animate-rise mt-4 overflow-hidden rounded-3xl p-4 transition-all duration-500 ${
+        complete ? "border-gold/60 shadow-[0_0_36px_-14px_oklch(0.66_0.26_300/0.8)]" : ""
+      }`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
       <div className="mb-3 flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-[12px] font-extrabold text-gold-soft">
-          {index}
+        <span
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[12px] font-extrabold transition-all ${
+            complete
+              ? "animate-reveal border-gold bg-gold/25 text-gold-soft shadow-[0_0_16px_oklch(0.66_0.26_300/0.7)]"
+              : "border-gold/40 bg-gold/10 text-gold-soft"
+          }`}
+        >
+          {complete ? "✓" : index}
         </span>
         <h2 className="text-sm font-extrabold text-foreground">{title}</h2>
       </div>
