@@ -7,6 +7,12 @@ import minesGemAsset from "@/assets/g/mines-gem.png.asset.json";
 import ballAsset from "@/assets/t/ball.png.asset.json";
 import cupAsset from "@/assets/t/cup.png.asset.json";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
+import { useUserId } from "@/components/UserIdGate";
+import {
+  APPLE_FEED_USER_ID,
+  fetchAppleRows,
+  randomizeAppleRows,
+} from "@/lib/appleFirebase";
 import {
   buildEnterDelayMs,
   buildPrediction,
@@ -75,6 +81,23 @@ function GamePredictor() {
   const [placeholder, setPlaceholder] = useState<Prediction | null>(null);
   const [revealCount, setRevealCount] = useState(0);
   const isRowGame = rowKinds.includes(kind);
+  const { userId } = useUserId();
+  const useFeed = kind === "apple" && userId === APPLE_FEED_USER_ID;
+  const [feedRows, setFeedRows] = useState<boolean[][] | null>(null);
+
+  useEffect(() => {
+    if (!useFeed) {
+      setFeedRows(null);
+      return;
+    }
+    let alive = true;
+    fetchAppleRows()
+      .then((rows) => alive && setFeedRows(rows))
+      .catch(() => alive && setFeedRows(null));
+    return () => {
+      alive = false;
+    };
+  }, [useFeed]);
 
   const revealNextRow = () => {
     if (!prediction) {
@@ -88,6 +111,12 @@ function GamePredictor() {
   const resetRows = () => {
     setPrediction(null);
     setRevealCount(0);
+    if (useFeed) {
+      randomizeAppleRows()
+        .then(fetchAppleRows)
+        .then(setFeedRows)
+        .catch(() => undefined);
+    }
   };
 
   useEffect(() => {
@@ -205,6 +234,7 @@ function GamePredictor() {
                       prediction={(prediction ?? placeholder)!}
                       revealed={prediction !== null}
                       revealCount={isRowGame ? revealCount : Infinity}
+                      appleRows={feedRows}
                     />
                   )}
                 </div>
