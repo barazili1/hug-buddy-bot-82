@@ -449,21 +449,27 @@ function Board({
     case "goal":
       return (
         <div>
-          <div className="grid grid-cols-3 gap-3">
-            {[0, 1, 2].map((i) => {
+          <div className="grid grid-cols-2 gap-3">
+            {[0, 1].map((i) => {
               const hit = i === prediction.pick;
               return (
                 <div
                   key={i}
-                  className={`flex aspect-[3/4] flex-col items-center justify-center gap-1 rounded-2xl border ${
+                  className={`flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl border transition-all duration-300 ${
                     hit
-                      ? "border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
+                      ? "animate-reveal border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
                       : "border-border bg-muted/25"
                   }`}
                 >
-                  <span className="text-3xl">{hit ? "⚽" : "🥅"}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                    {["Left", "Center", "Right"][i]}
+                  <span className={`text-4xl ${hit ? "animate-float" : "opacity-60"}`}>
+                    {i === 0 ? "⚽" : "🚫"}
+                  </span>
+                  <span
+                    className={`text-xs font-black uppercase tracking-[0.2em] ${
+                      hit ? "text-gold" : "text-muted-foreground"
+                    }`}
+                  >
+                    {i === 0 ? "Goal" : "No Goal"}
                   </span>
                 </div>
               );
