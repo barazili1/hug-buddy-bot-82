@@ -333,7 +333,7 @@ function Board({
     case "crash":
       return (
         <div>
-          <div className="relative overflow-hidden rounded-2xl border border-accent/40 bg-background/40 p-6 text-center">
+          <div className="relative overflow-hidden luxe-panel p-6 text-center">
             <svg
               aria-hidden="true"
               viewBox="0 0 300 100"
@@ -360,7 +360,7 @@ function Board({
     case "dice":
       return (
         <div>
-          <div className="rounded-2xl border border-primary/40 bg-background/40 p-6 text-center">
+          <div className="luxe-panel p-6 text-center">
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               Roll {prediction.direction}
             </p>
@@ -377,7 +377,7 @@ function Board({
 
     case "thimbles":
       return (
-        <div className="rounded-3xl border border-primary/30 bg-background/40 p-4">
+        <div className="luxe-panel p-4">
           <div className="grid grid-cols-3 items-end gap-3">
             {[0, 1, 2].map((i) => {
               const hit = revealed && i === prediction.pick;
@@ -480,12 +480,12 @@ function Board({
 
     case "swamp":
       return (
-        <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-2 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
             <div key={r} className="flex items-center gap-2">
-              <span className="w-16 shrink-0 rounded-lg border border-accent/40 py-1 text-center text-[10px] font-bold text-accent">
+              <span className="w-16 shrink-0 rounded-lg border border-gold/40 py-1 text-center text-[10px] font-bold text-gold">
                 {row.multiplier}
               </span>
               <div
@@ -517,7 +517,7 @@ function Board({
       return (
         <div>
           <div
-            className="grid gap-1 rounded-2xl border border-primary/40 bg-background/40 p-2"
+            className="grid gap-1 luxe-panel p-2"
             style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
           >
             {prediction.grid.map((sym, i) => {
@@ -563,7 +563,7 @@ function Board({
 
     case "apple":
       return (
-        <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-2 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
@@ -600,7 +600,7 @@ function Board({
 
     case "eastern":
       return (
-        <div className="space-y-1.5 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-1.5 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             const cashout = shown && r === prediction.cashoutRow;
@@ -644,7 +644,7 @@ function Board({
     default:
       return (
         <div>
-          <div className="grid grid-cols-3 gap-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+          <div className="grid grid-cols-3 gap-2 luxe-panel p-3">
             {prediction.reels.map((reel, c) => (
               <div key={c} className="grid gap-2">
                 {reel.map((sym, r) => (
