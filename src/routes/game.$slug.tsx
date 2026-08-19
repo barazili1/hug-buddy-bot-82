@@ -440,7 +440,7 @@ function Board({
                     <img
                       src={minesGemAsset.url}
                       alt="Diamond"
-                      className="animate-reveal h-8 w-8 object-contain drop-shadow-[0_0_10px_oklch(0.85_0.15_88/0.6)]"
+                      className="animate-reveal absolute inset-0 h-full w-full object-cover drop-shadow-[0_0_10px_oklch(0.85_0.15_88/0.6)]"
                     />
                   ) : (
                     <span className="text-muted-foreground/60">◆</span>
