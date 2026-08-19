@@ -1,6 +1,8 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
+import appleCellAsset from "@/assets/g/apple-cell.png.asset.json";
+import appleGoodAsset from "@/assets/g/apple-good.png.asset.json";
 import ballAsset from "@/assets/t/ball.png.asset.json";
 import cupAsset from "@/assets/t/cup.png.asset.json";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
@@ -560,41 +562,37 @@ function Board({
 
     case "apple":
       return (
-        <div className="space-y-1.5 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
-              <div key={r} className="flex items-center gap-2">
-                <div
-                  className="grid flex-1 gap-1.5"
-                  style={{ gridTemplateColumns: `repeat(${row.cols}, minmax(0, 1fr))` }}
-                >
-                  {Array.from({ length: row.cols }, (_, c) => {
-                    const safe = shown && c === row.safe;
-                    return (
-                      <div
-                        key={c}
-                        className={`${cellBase} rounded-lg text-base ${
-                          safe ? cellSafe : shown ? cellIdle : cellHidden
-                        }`}
-                      >
-                        {safe ? "🍎" : "🍏"}
-                      </div>
-                    );
-                  })}
-                </div>
-                <span
-                  className={`w-14 shrink-0 rounded-md border px-1 py-1 text-center text-[10px] font-bold ${
-                    shown ? "border-accent/60 text-accent" : "border-border/40 text-muted-foreground opacity-40"
-                  }`}
-                >
-                  {row.multiplier}
-                </span>
+              <div key={r} className="flex justify-center gap-2">
+                {Array.from({ length: row.cols }, (_, c) => {
+                  const safe = shown && c === row.safe;
+                  return (
+                    <div
+                      key={c}
+                      className={`flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 ${
+                        safe
+                          ? "border-accent bg-accent/20 shadow-[0_0_18px_oklch(0.8_0.18_180/0.55)]"
+                          : "border-border bg-muted/30"
+                      }`}
+                    >
+                      <img
+                        src={safe ? appleGoodAsset.url : appleCellAsset.url}
+                        alt={safe ? "تفاحة سليمة" : "خانة"}
+                        width={40}
+                        height={40}
+                        className={`h-9 w-9 object-contain ${safe ? "" : "opacity-80"}`}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             );
           })}
           <p className="pt-1 text-center text-[11px] text-muted-foreground" dir="rtl">
-            اضغط الزر عشان يظهر صف واحد كل مرة — التفاحة المضيئة هي المتوقّعة
+            اضغط الزر عشان يظهر صف واحد كل مرة — التفاحة السليمة هي المتوقّعة
           </p>
         </div>
       );
