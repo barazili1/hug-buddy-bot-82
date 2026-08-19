@@ -59,6 +59,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
 }
 
 :root {
@@ -95,6 +98,94 @@
   --sidebar-accent-foreground: oklch(0.97 0.01 300);
   --sidebar-border: oklch(0.66 0.26 300 / 0.22);
   --sidebar-ring: oklch(0.66 0.26 300);
+  --gold: oklch(0.85 0.15 88);
+  --gold-soft: oklch(0.93 0.09 95);
+  --gold-deep: oklch(0.62 0.13 75);
+}
+
+@utility luxe-panel {
+  position: relative;
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(
+      160deg,
+      oklch(0.16 0.05 300 / 0.85),
+      oklch(0.09 0.03 300 / 0.92)
+    );
+  border: 1px solid oklch(0.85 0.15 88 / 0.28);
+  box-shadow:
+    0 24px 60px -24px oklch(0 0 0 / 0.85),
+    inset 0 1px 0 oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(18px);
+}
+
+@utility luxe-hairline {
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      oklch(0.93 0.09 95 / 0.7),
+      transparent
+    );
+  }
+}
+
+@utility gold-text {
+  background: linear-gradient(
+    100deg,
+    oklch(0.72 0.12 78),
+    oklch(0.96 0.1 96),
+    oklch(0.72 0.12 78)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility gold-button {
+  background: linear-gradient(
+    180deg,
+    oklch(0.94 0.1 96),
+    oklch(0.82 0.14 86) 45%,
+    oklch(0.66 0.13 74)
+  );
+  color: oklch(0.16 0.03 60);
+  box-shadow:
+    0 18px 40px -18px oklch(0.85 0.15 88 / 0.9),
+    inset 0 1px 0 oklch(1 0 0 / 0.6),
+    inset 0 -2px 0 oklch(0 0 0 / 0.18);
+}
+
+@keyframes luxe-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@utility luxe-sheen {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      oklch(1 0 0 / 0.45),
+      transparent
+    );
+    animation: luxe-sheen 3.2s ease-in-out infinite;
+  }
 }
 
 @keyframes pulse-glow {
