@@ -2,6 +2,10 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/casino-ai-logo.png";
+import gooobetLogo from "@/assets/g/gooobet.png.asset.json";
+import megapariLogo from "@/assets/g/megapari.png.asset.json";
+import paripulseLogo from "@/assets/g/paripulse.png.asset.json";
+import winwinLogo from "@/assets/g/winwin.png.asset.json";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
 import { useUserId } from "@/components/UserIdGate";
 
