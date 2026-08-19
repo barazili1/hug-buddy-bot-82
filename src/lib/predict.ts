@@ -256,7 +256,7 @@ export function buildPrediction(kind: PredictionKind): Prediction {
 
 /** Random enter-game delay: 1–5 minutes from now. */
 export function buildEnterDelayMs() {
-  return Math.round(rnd(60_000, 300_000));
+  return Math.round(rnd(60_000, 180_000));
 }
 
 /** Exact entry time in 12-hour Hours:Minutes format, e.g. "7:43 PM". */

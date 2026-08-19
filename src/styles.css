@@ -98,9 +98,9 @@
   --sidebar-accent-foreground: oklch(0.97 0.01 300);
   --sidebar-border: oklch(0.66 0.26 300 / 0.22);
   --sidebar-ring: oklch(0.66 0.26 300);
-  --gold: oklch(0.85 0.15 88);
-  --gold-soft: oklch(0.93 0.09 95);
-  --gold-deep: oklch(0.62 0.13 75);
+  --gold: oklch(0.66 0.26 300);
+  --gold-soft: oklch(0.82 0.18 315);
+  --gold-deep: oklch(0.5 0.22 295);
 }
 
 @utility luxe-panel {
@@ -112,7 +112,7 @@
       oklch(0.16 0.05 300 / 0.85),
       oklch(0.09 0.03 300 / 0.92)
     );
-  border: 1px solid oklch(0.85 0.15 88 / 0.28);
+  border: 1px solid oklch(0.66 0.26 300 / 0.35);
   box-shadow:
     0 24px 60px -24px oklch(0 0 0 / 0.85),
     inset 0 1px 0 oklch(1 0 0 / 0.08);
@@ -129,7 +129,7 @@
     background: linear-gradient(
       to right,
       transparent,
-      oklch(0.93 0.09 95 / 0.7),
+      oklch(0.82 0.18 315 / 0.8),
       transparent
     );
   }
@@ -138,9 +138,9 @@
 @utility gold-text {
   background: linear-gradient(
     100deg,
-    oklch(0.72 0.12 78),
-    oklch(0.96 0.1 96),
-    oklch(0.72 0.12 78)
+    oklch(0.66 0.26 300),
+    oklch(0.86 0.16 320),
+    oklch(0.66 0.26 300)
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -150,13 +150,13 @@
 @utility gold-button {
   background: linear-gradient(
     180deg,
-    oklch(0.94 0.1 96),
-    oklch(0.82 0.14 86) 45%,
-    oklch(0.66 0.13 74)
+    oklch(0.78 0.19 315),
+    oklch(0.66 0.26 300) 45%,
+    oklch(0.52 0.23 292)
   );
-  color: oklch(0.16 0.03 60);
+  color: oklch(0.99 0.005 300);
   box-shadow:
-    0 18px 40px -18px oklch(0.85 0.15 88 / 0.9),
+    0 18px 40px -18px oklch(0.66 0.26 300 / 0.9),
     inset 0 1px 0 oklch(1 0 0 / 0.6),
     inset 0 -2px 0 oklch(0 0 0 / 0.18);
 }
