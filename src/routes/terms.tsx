@@ -318,9 +318,9 @@ function Step({
 }: {
   index: number;
   title: string;
-  complete?: boolean;
-  delay?: number;
-  locked?: boolean;
+  complete?: boolean | undefined;
+  delay?: number | undefined;
+  locked?: boolean | undefined;
   children: React.ReactNode;
 }) {
   return (
