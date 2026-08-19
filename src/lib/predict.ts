@@ -11,6 +11,7 @@ export type PredictionKind =
   | "swamp"
   | "gems"
   | "eastern"
+  | "apple"
   | "cashout"
   | "none";
 
@@ -82,6 +83,7 @@ const arabicNames: Record<string, string> = {
   "Crash Point": "نقطة الكراش",
   "Vampire Curse": "لعنة الفامبير",
   Crystal: "الكريستال",
+  "Apple of Fortune": "تفاحة الحظ",
   "Burning Hot": "الفواكه الملتهبة",
 };
 
@@ -115,6 +117,7 @@ const kindByName: Record<string, PredictionKind> = {
   Goal: "goal",
   "Swamp Land": "cashout",
   "Eastern Nights": "eastern",
+  "Apple of Fortune": "apple",
   Crystal: "none",
   "Vampire Curse": "none",
   "777": "none",
@@ -143,6 +146,7 @@ export type Prediction =
       cols: number;
       cashoutRow: number;
     }
+  | { kind: "apple"; rows: { multiplier: string; safe: number; cols: number }[] }
   | { kind: "none" }
   | { kind: "swamp"; rows: { multiplier: string; safe: number }[]; cols: number }
   | { kind: "gems"; grid: string[]; cluster: number[]; cols: number };
@@ -207,6 +211,16 @@ export function buildPrediction(kind: PredictionKind): Prediction {
         return row;
       }).reverse();
       return { kind: "eastern", rows, cols, cashoutRow: Math.floor(rnd(0, rows.length)) };
+    }
+    case "apple": {
+      let m = rnd(1.2, 1.45);
+      const rows = Array.from({ length: 10 }, () => {
+        const cols = 4;
+        const row = { multiplier: `x${m.toFixed(2)}`, safe: Math.floor(rnd(0, cols)), cols };
+        m *= rnd(1.3, 1.6);
+        return row;
+      }).reverse();
+      return { kind: "apple", rows };
     }
     case "swamp": {
       const cols = 5;

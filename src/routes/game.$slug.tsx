@@ -52,7 +52,7 @@ export const Route = createFileRoute("/game/$slug")({
 type Phase = "idle" | "waiting" | "ready";
 
 /** Games whose board is revealed one row at a time. */
-const rowKinds = ["eastern", "swamp", "cashout"];
+const rowKinds = ["eastern", "swamp", "cashout", "apple"];
 
 function fmt(ms: number) {
   const s = Math.max(0, Math.ceil(ms / 1000));
@@ -559,6 +559,49 @@ function Board({
           ))}
           <p className="text-center text-[11px] text-muted-foreground" dir="rtl">
             اسحب عند المضاعفات اللي فوق — التوقيت عشوائي كل جيم
+          </p>
+        </div>
+      );
+
+    case "apple":
+      return (
+        <div className="space-y-1.5 rounded-2xl border border-primary/40 bg-background/40 p-3">
+          {prediction.rows.map((row, r) => {
+            const shown = r >= prediction.rows.length - revealCount;
+            return (
+              <div key={r} className="flex items-center gap-2">
+                <div
+                  className="grid flex-1 gap-1.5"
+                  style={{ gridTemplateColumns: `repeat(${row.cols}, minmax(0, 1fr))` }}
+                >
+                  {Array.from({ length: row.cols }, (_, c) => {
+                    const safe = shown && c === row.safe;
+                    return (
+                      <div
+                        key={c}
+                        className={`flex aspect-square items-center justify-center rounded-lg border text-base ${
+                          safe
+                            ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
+                            : "border-border/50 opacity-40"
+                        }`}
+                      >
+                        {safe ? "🍎" : ""}
+                      </div>
+                    );
+                  })}
+                </div>
+                <span
+                  className={`w-14 shrink-0 rounded-md border px-1 py-1 text-center text-[10px] font-bold ${
+                    shown ? "border-accent/60 text-accent" : "border-border/40 text-muted-foreground opacity-40"
+                  }`}
+                >
+                  {row.multiplier}
+                </span>
+              </div>
+            );
+          })}
+          <p className="pt-1 text-center text-[11px] text-muted-foreground" dir="rtl">
+            اضغط الزر عشان يظهر صف واحد كل مرة — التفاحة المضيئة هي المتوقّعة
           </p>
         </div>
       );

@@ -1,3 +1,4 @@
+import i_appleOfFortune from "@/assets/g/apple-of-fortune.png.asset.json";
 import g_aviator from "@/assets/g/aviator.png.asset.json";
 import g_spaceman from "@/assets/g/spaceman.png.asset.json";
 import g_penaltyShootOutStreet from "@/assets/g/penalty-shoot-out-street.png.asset.json";
@@ -129,6 +130,7 @@ export const games: Game[] = [
   { name: "Hamster Run", image: g_hamsterRun.url, category: "casino" },
   { name: "Lucky Mines", image: g_luckyMines.url, category: "casino" },
   { name: "Tower", image: g_tower.url, category: "casino" },
+  { name: "Apple of Fortune", image: i_appleOfFortune.url, category: "instant" },
   { name: "Air Crash", image: i_airCrash.url, category: "instant" },
   { name: "777", image: i_777.url, category: "instant" },
   { name: "Thimbles", image: i_thimbles.url, category: "instant" },
