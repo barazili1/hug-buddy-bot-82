@@ -125,11 +125,12 @@ function GamePredictor() {
     <>
       <ParticlesBackground />
       <main className="relative z-10 min-h-screen pb-24">
-        <header className="sticky top-0 z-30 border-b border-border bg-background/40 backdrop-blur-xl">
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(120%_80%_at_50%_-10%,oklch(0.85_0.15_88/0.12),transparent_60%)]" />
+        <header className="sticky top-0 z-30 border-b border-gold/25 bg-background/60 backdrop-blur-xl">
           <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
             <Link
               to="/lobby"
-              className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+              className="flex items-center gap-1.5 rounded-full border border-gold/25 px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-gold/60 hover:text-gold"
             >
               <svg
                 aria-hidden="true"
@@ -143,7 +144,7 @@ function GamePredictor() {
               </svg>
               Lobby
             </Link>
-            <span className="bg-gradient-to-b from-accent to-primary bg-clip-text text-sm font-extrabold tracking-[0.2em] text-transparent">
+            <span className="gold-text text-sm font-extrabold tracking-[0.32em]">
               Casino Ai
             </span>
           </div>
@@ -151,26 +152,26 @@ function GamePredictor() {
 
         <div className="mx-auto max-w-3xl px-4">
           {/* Game hero */}
-          <section className="relative mt-6 overflow-hidden rounded-3xl border border-primary/40 backdrop-blur-md shadow-[0_0_40px_oklch(0.66_0.26_300/0.35)]">
+          <section className="luxe-panel luxe-hairline relative mt-6 overflow-hidden">
             <img
               src={image}
               alt={`${name} game artwork`}
               width={301}
               height={180}
-              className="h-40 w-full object-cover opacity-70 sm:h-56"
+              className="h-44 w-full object-cover opacity-60 sm:h-60"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
               <div>
-                <h1 className="text-lg font-extrabold text-foreground sm:text-2xl">{name}</h1>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-accent">
+                <h1 className="gold-text text-xl font-black tracking-tight sm:text-3xl">{name}</h1>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
                   AI Signal Predictor
                 </p>
               </div>
-              <span className="flex items-center gap-1.5 rounded-full border border-accent/50 bg-background/70 px-3 py-1 text-[10px] font-bold text-accent backdrop-blur-md">
+              <span className="flex items-center gap-1.5 rounded-full border border-gold/50 bg-background/70 px-3 py-1 text-[10px] font-bold tracking-widest text-gold backdrop-blur-md">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/70" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
                 </span>
                 LIVE
               </span>
@@ -178,14 +179,14 @@ function GamePredictor() {
           </section>
 
           {/* Prediction board */}
-          <section className="relative mt-5 overflow-hidden rounded-3xl border border-border p-5 backdrop-blur-xl">
-            <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/20 blur-[70px]" />
-            <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-accent/15 blur-[70px]" />
+          <section className="luxe-panel luxe-hairline relative mt-5 overflow-hidden p-5">
+            <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/15 blur-[70px]" />
+            <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-gold/10 blur-[70px]" />
 
             {kind !== "none" && (
               <>
-                <div className="relative flex items-center justify-between">
-                  <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
+                <div className="relative flex items-center justify-between border-b border-gold/15 pb-3">
+                  <h2 className="gold-text text-xs font-black uppercase tracking-[0.3em]">
                     Prediction
                   </h2>
                   <span className="text-[10px] font-semibold text-muted-foreground" dir="rtl">
@@ -216,15 +217,15 @@ function GamePredictor() {
                   <button
                     type="button"
                     onClick={revealNextRow}
-                    className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                    className="gold-button luxe-sheen w-full rounded-2xl px-6 py-4 text-base font-black uppercase tracking-[0.25em] transition-transform active:scale-[0.98]"
                   >
-                    {revealCount === 0 ? "بدأ" : "الصف التالي"}
+                    <span className="relative z-10">{revealCount === 0 ? "بدأ" : "الصف التالي"}</span>
                   </button>
                   {revealCount > 0 && (
                     <button
                       type="button"
                       onClick={resetRows}
-                      className="w-full rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                      className="w-full rounded-full border border-gold/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                     >
                       توقع جديد
                     </button>
@@ -236,32 +237,32 @@ function GamePredictor() {
                 <button
                   type="button"
                   onClick={start}
-                  className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                  className="gold-button luxe-sheen w-full rounded-2xl px-6 py-4 text-base font-black uppercase tracking-[0.25em] transition-transform active:scale-[0.98]"
                 >
-                  بدأ
+                  <span className="relative z-10">بدأ</span>
                 </button>
               )}
 
               {!isRowGame && phase === "waiting" && (
-                <div className="rounded-2xl border border-primary/40 p-5 text-center">
-                  <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                <div className="luxe-panel p-5 text-center">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                     Enter at
                   </p>
-                  <p className="mt-1 font-mono text-2xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.6)]">
+                  <p className="gold-text mt-1 font-mono text-2xl font-extrabold">
                     {enterAt != null ? formatEnterTime(enterAt) : "--:--"}
                   </p>
-                  <p className="mt-3 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                     Next entry in
                   </p>
-                  <p className="mt-1 font-mono text-4xl font-extrabold text-foreground drop-shadow-[0_0_20px_oklch(0.66_0.26_300/0.7)]">
+                  <p className="mt-1 font-mono text-4xl font-black text-foreground drop-shadow-[0_0_22px_oklch(0.85_0.15_88/0.35)]">
                     {fmt(remaining)}
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground" dir="rtl">
                     استنى لحد ما ييجي الوقت المناسب… متخشش دلوقتي
                   </p>
-                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted">
+                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted/60">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-[width] duration-300"
+                      className="h-full rounded-full bg-gradient-to-r from-gold-deep via-gold to-gold-soft transition-[width] duration-300"
                       style={{
                         width: `${Math.min(100, Math.max(0, 100 - (remaining / total) * 100))}%`,
                       }}
@@ -271,20 +272,20 @@ function GamePredictor() {
               )}
 
               {!isRowGame && phase === "ready" && (
-                <div className="animate-[pulse-glow_2s_ease-in-out_infinite] rounded-2xl border border-accent bg-accent/10 p-6 text-center shadow-[0_0_40px_oklch(0.8_0.18_180/0.5)]">
-                  <p className="text-3xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.8)]" dir="rtl">
+                <div className="luxe-panel border-gold/60 p-6 text-center shadow-[0_0_60px_-15px_oklch(0.85_0.15_88/0.6)]">
+                  <p className="gold-text text-3xl font-black" dir="rtl">
                     خش جيم 🚀
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground" dir="rtl">
                     دخول الآن على {name} بالتوقع اللي فوق
                   </p>
-                  <p className="mt-1 font-mono text-xs text-accent">
+                  <p className="mt-1 font-mono text-xs text-gold">
                     {enterAt != null ? formatEnterTime(enterAt) : ""}
                   </p>
                   <button
                     type="button"
                     onClick={reset}
-                    className="mt-4 rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                    className="mt-4 rounded-full border border-gold/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                   >
                     توقع جديد
                   </button>
@@ -292,7 +293,7 @@ function GamePredictor() {
               )}
             </div>
 
-            <p className="relative mt-4 text-center text-[10px] leading-relaxed text-muted-foreground">
+            <p className="relative mt-4 text-center text-[10px] leading-relaxed text-muted-foreground/70">
               Predictions are statistical suggestions only and never guarantee an outcome.
             </p>
           </section>
@@ -305,19 +306,19 @@ function GamePredictor() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border/70 p-3 text-center backdrop-blur-md">
-      <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
-      <p className="mt-1 text-lg font-extrabold text-foreground">{value}</p>
+    <div className="luxe-panel p-3 text-center">
+      <p className="text-[9px] uppercase tracking-[0.28em] text-muted-foreground">{label}</p>
+      <p className="gold-text mt-1 text-lg font-black">{value}</p>
     </div>
   );
 }
 
 const cellBase =
-  "relative flex aspect-square items-center justify-center rounded-xl border border-border bg-gradient-to-b from-muted/60 to-muted/20 text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.06)] transition-all duration-300";
+  "relative flex aspect-square items-center justify-center rounded-xl border border-gold/20 bg-[linear-gradient(180deg,oklch(0.22_0.05_300/0.75),oklch(0.11_0.03_300/0.85))] text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_6px_14px_-8px_oklch(0_0_0/0.9)] transition-all duration-300";
 const cellSafe =
-  "border-accent bg-accent/20 text-accent shadow-[0_0_22px_oklch(0.8_0.18_180/0.45),inset_0_1px_0_oklch(1_0_0/0.12)]";
+  "border-gold bg-[linear-gradient(180deg,oklch(0.85_0.15_88/0.35),oklch(0.62_0.13_75/0.25))] text-gold-soft shadow-[0_0_26px_oklch(0.85_0.15_88/0.55),inset_0_1px_0_oklch(1_0_0/0.25)]";
 const cellIdle = "text-muted-foreground/70";
-const cellHidden = "border-dashed border-border/70 text-muted-foreground/40";
+const cellHidden = "border-dashed border-gold/15 text-muted-foreground/30 opacity-70";
 
 function Board({
   prediction,
@@ -332,7 +333,7 @@ function Board({
     case "crash":
       return (
         <div>
-          <div className="relative overflow-hidden rounded-2xl border border-accent/40 bg-background/40 p-6 text-center">
+          <div className="relative overflow-hidden luxe-panel p-6 text-center">
             <svg
               aria-hidden="true"
               viewBox="0 0 300 100"
@@ -345,7 +346,7 @@ function Board({
             <p className="relative text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               Predicted crash
             </p>
-            <p className="relative mt-1 font-mono text-5xl font-extrabold text-accent drop-shadow-[0_0_22px_oklch(0.8_0.18_180/0.7)]">
+            <p className="relative mt-1 font-mono text-5xl font-extrabold gold-text">
               {prediction.multiplier}
             </p>
           </div>
@@ -359,7 +360,7 @@ function Board({
     case "dice":
       return (
         <div>
-          <div className="rounded-2xl border border-primary/40 bg-background/40 p-6 text-center">
+          <div className="luxe-panel p-6 text-center">
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               Roll {prediction.direction}
             </p>
@@ -376,7 +377,7 @@ function Board({
 
     case "thimbles":
       return (
-        <div className="rounded-3xl border border-primary/30 bg-background/40 p-4">
+        <div className="luxe-panel p-4">
           <div className="grid grid-cols-3 items-end gap-3">
             {[0, 1, 2].map((i) => {
               const hit = revealed && i === prediction.pick;
@@ -456,7 +457,7 @@ function Board({
                   key={i}
                   className={`flex aspect-[3/4] flex-col items-center justify-center gap-1 rounded-2xl border ${
                     hit
-                      ? "border-accent bg-accent/10 shadow-[0_0_30px_oklch(0.8_0.18_180/0.55)]"
+                      ? "border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
                       : "border-border bg-muted/25"
                   }`}
                 >
@@ -479,12 +480,12 @@ function Board({
 
     case "swamp":
       return (
-        <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-2 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
             <div key={r} className="flex items-center gap-2">
-              <span className="w-16 shrink-0 rounded-lg border border-accent/40 py-1 text-center text-[10px] font-bold text-accent">
+              <span className="w-16 shrink-0 rounded-lg border border-gold/40 py-1 text-center text-[10px] font-bold text-gold">
                 {row.multiplier}
               </span>
               <div
@@ -516,7 +517,7 @@ function Board({
       return (
         <div>
           <div
-            className="grid gap-1 rounded-2xl border border-primary/40 bg-background/40 p-2"
+            className="grid gap-1 luxe-panel p-2"
             style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
           >
             {prediction.grid.map((sym, i) => {
@@ -546,10 +547,10 @@ function Board({
           {prediction.steps.slice(0, revealCount).map((s, i) => (
             <div
               key={i}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-accent/50 bg-accent/10 px-4 py-3 shadow-[0_0_26px_oklch(0.8_0.18_180/0.35)]"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-gold/50 bg-gold/10 px-4 py-3 shadow-[0_0_26px_oklch(0.85_0.15_88/0.3)]"
               dir="rtl"
             >
-              <span className="text-sm font-extrabold text-accent">اسحب الآن</span>
+              <span className="text-sm font-extrabold text-gold">اسحب الآن</span>
               <span className="font-mono text-xs text-muted-foreground">الخطوة {s.step}</span>
               <span className="font-mono text-lg font-extrabold text-foreground">{s.multiplier}</span>
             </div>
@@ -562,7 +563,7 @@ function Board({
 
     case "apple":
       return (
-        <div className="space-y-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-2 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
@@ -574,7 +575,7 @@ function Board({
                       key={c}
                       className={`flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 ${
                         safe
-                          ? "border-accent bg-accent/20 shadow-[0_0_18px_oklch(0.8_0.18_180/0.55)]"
+                          ? "border-gold bg-gold/20 shadow-[0_0_20px_oklch(0.85_0.15_88/0.55)]"
                           : "border-border bg-muted/30"
                       }`}
                     >
@@ -599,7 +600,7 @@ function Board({
 
     case "eastern":
       return (
-        <div className="space-y-1.5 rounded-2xl border border-primary/40 bg-background/40 p-3">
+        <div className="space-y-1.5 luxe-panel p-3">
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             const cashout = shown && r === prediction.cashoutRow;
@@ -625,7 +626,7 @@ function Board({
                 </div>
                 {cashout && (
                   <span
-                    className="shrink-0 rounded-full border border-accent bg-accent/10 px-2 py-1 text-[10px] font-extrabold text-accent shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
+                    className="shrink-0 rounded-full border border-gold bg-gold/10 px-2 py-1 text-[10px] font-extrabold text-gold shadow-[0_0_18px_oklch(0.85_0.15_88/0.5)]"
                     dir="rtl"
                   >
                     اسحب الآن
@@ -643,7 +644,7 @@ function Board({
     default:
       return (
         <div>
-          <div className="grid grid-cols-3 gap-2 rounded-2xl border border-primary/40 bg-background/40 p-3">
+          <div className="grid grid-cols-3 gap-2 luxe-panel p-3">
             {prediction.reels.map((reel, c) => (
               <div key={c} className="grid gap-2">
                 {reel.map((sym, r) => (
@@ -651,7 +652,7 @@ function Board({
                     key={r}
                     className={`flex aspect-square items-center justify-center rounded-xl border text-2xl ${
                       r === prediction.payline - 1
-                        ? "border-accent bg-accent/10 shadow-[0_0_22px_oklch(0.8_0.18_180/0.45)]"
+                        ? "border-gold bg-gold/10 shadow-[0_0_24px_oklch(0.85_0.15_88/0.45)]"
                         : "border-border/50 opacity-60"
                     }`}
                   >
