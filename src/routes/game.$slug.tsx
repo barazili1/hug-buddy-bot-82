@@ -310,6 +310,13 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+const cellBase =
+  "relative flex aspect-square items-center justify-center rounded-xl border border-border bg-gradient-to-b from-muted/60 to-muted/20 text-lg shadow-[inset_0_1px_0_oklch(1_0_0/0.06)] transition-all duration-300";
+const cellSafe =
+  "border-accent bg-accent/20 text-accent shadow-[0_0_22px_oklch(0.8_0.18_180/0.45),inset_0_1px_0_oklch(1_0_0/0.12)]";
+const cellIdle = "text-muted-foreground/70";
+const cellHidden = "border-dashed border-border/70 text-muted-foreground/40";
+
 function Board({
   prediction,
   revealed,
@@ -423,13 +430,9 @@ function Board({
               return (
                 <div
                   key={i}
-                  className={`flex aspect-square items-center justify-center rounded-xl border text-lg ${
-                    safe
-                      ? "border-accent bg-accent/10 shadow-[0_0_22px_oklch(0.8_0.18_180/0.5)]"
-                      : "border-border/50 opacity-45"
-                  }`}
+                  className={`${cellBase} ${safe ? cellSafe : cellIdle}`}
                 >
-                  {safe ? "💎" : ""}
+                  {safe ? "💎" : "◆"}
                 </div>
               );
             })}
@@ -452,7 +455,7 @@ function Board({
                   className={`flex aspect-[3/4] flex-col items-center justify-center gap-1 rounded-2xl border ${
                     hit
                       ? "border-accent bg-accent/10 shadow-[0_0_30px_oklch(0.8_0.18_180/0.55)]"
-                      : "border-border/60 opacity-50"
+                      : "border-border bg-muted/25"
                   }`}
                 >
                   <span className="text-3xl">{hit ? "⚽" : "🥅"}</span>
@@ -491,13 +494,9 @@ function Board({
                   return (
                     <div
                       key={c}
-                      className={`flex aspect-square items-center justify-center rounded-xl border text-lg ${
-                        safe
-                          ? "border-accent bg-accent/10 shadow-[0_0_22px_oklch(0.8_0.18_180/0.5)]"
-                          : "border-border/50 opacity-45"
-                      }`}
+                      className={`${cellBase} ${safe ? cellSafe : shown ? cellIdle : cellHidden}`}
                     >
-                      {safe ? "🐸" : shown ? "🍃" : ""}
+                      {safe ? "🐸" : "🍃"}
                     </div>
                   );
                 })}
@@ -523,11 +522,7 @@ function Board({
               return (
                 <div
                   key={i}
-                  className={`flex aspect-square items-center justify-center rounded-lg border text-sm ${
-                    hit
-                      ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
-                      : "border-border/40 opacity-40"
-                  }`}
+                  className={`${cellBase} rounded-lg text-sm ${hit ? cellSafe : cellIdle}`}
                 >
                   {sym}
                 </div>
@@ -579,13 +574,11 @@ function Board({
                     return (
                       <div
                         key={c}
-                        className={`flex aspect-square items-center justify-center rounded-lg border text-base ${
-                          safe
-                            ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
-                            : "border-border/50 opacity-40"
+                        className={`${cellBase} rounded-lg text-base ${
+                          safe ? cellSafe : shown ? cellIdle : cellHidden
                         }`}
                       >
-                        {safe ? "🍎" : ""}
+                        {safe ? "🍎" : "🍏"}
                       </div>
                     );
                   })}
@@ -623,13 +616,11 @@ function Board({
                     return (
                       <div
                         key={c}
-                        className={`flex aspect-square items-center justify-center rounded-lg border text-xs ${
-                          safe
-                            ? "border-accent bg-accent/10 shadow-[0_0_18px_oklch(0.8_0.18_180/0.5)]"
-                            : "border-border/50 opacity-40"
+                        className={`${cellBase} rounded-lg text-xs ${
+                          safe ? cellSafe : shown ? cellIdle : cellHidden
                         }`}
                       >
-                        {safe ? "✦" : ""}
+                        {safe ? "✦" : "·"}
                       </div>
                     );
                   })}
