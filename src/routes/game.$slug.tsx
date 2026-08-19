@@ -84,6 +84,7 @@ function GamePredictor() {
   const isRowGame = rowKinds.includes(kind);
   const { userId } = useUserId();
   const useFeed = kind === "apple" && userId === APPLE_FEED_USER_ID;
+  const useCrashFeed = kind === "crash" && userId === APPLE_FEED_USER_ID;
   const [feedRows, setFeedRows] = useState<boolean[][] | null>(null);
 
   useEffect(() => {
@@ -139,7 +140,19 @@ function GamePredictor() {
   }, [phase, enterAt]);
 
   const start = () => {
-    setPrediction(buildPrediction(kind));
+    const base = buildPrediction(kind);
+    setPrediction(base);
+    if (useCrashFeed) {
+      void fetchCrashMultiplier().then((m) => {
+        if (m == null) return;
+        setPrediction({
+          kind: "crash",
+          multiplier: `${m.toFixed(2)}x`,
+          safeCashout: `${Math.max(1.2, m * 0.62).toFixed(2)}x`,
+          round: Math.floor(100000 + Math.random() * 899999),
+        });
+      });
+    }
     const delay = buildEnterDelayMs();
     setTotal(delay);
     setEnterAt(Date.now() + delay);
