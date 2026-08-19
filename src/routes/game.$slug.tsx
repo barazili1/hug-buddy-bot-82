@@ -217,15 +217,15 @@ function GamePredictor() {
                   <button
                     type="button"
                     onClick={revealNextRow}
-                    className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                    className="gold-button luxe-sheen w-full rounded-2xl px-6 py-4 text-base font-black uppercase tracking-[0.25em] transition-transform active:scale-[0.98]"
                   >
-                    {revealCount === 0 ? "بدأ" : "الصف التالي"}
+                    <span className="relative z-10">{revealCount === 0 ? "بدأ" : "الصف التالي"}</span>
                   </button>
                   {revealCount > 0 && (
                     <button
                       type="button"
                       onClick={resetRows}
-                      className="w-full rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                      className="w-full rounded-full border border-gold/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                     >
                       توقع جديد
                     </button>
@@ -237,32 +237,32 @@ function GamePredictor() {
                 <button
                   type="button"
                   onClick={start}
-                  className="w-full rounded-2xl bg-gradient-to-r from-primary to-accent px-6 py-4 text-base font-extrabold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_34px_oklch(0.66_0.26_300/0.55)] transition-transform active:scale-[0.98]"
+                  className="gold-button luxe-sheen w-full rounded-2xl px-6 py-4 text-base font-black uppercase tracking-[0.25em] transition-transform active:scale-[0.98]"
                 >
-                  بدأ
+                  <span className="relative z-10">بدأ</span>
                 </button>
               )}
 
               {!isRowGame && phase === "waiting" && (
-                <div className="rounded-2xl border border-primary/40 p-5 text-center">
-                  <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                <div className="luxe-panel p-5 text-center">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                     Enter at
                   </p>
-                  <p className="mt-1 font-mono text-2xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.6)]">
+                  <p className="gold-text mt-1 font-mono text-2xl font-extrabold">
                     {enterAt != null ? formatEnterTime(enterAt) : "--:--"}
                   </p>
-                  <p className="mt-3 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+                  <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                     Next entry in
                   </p>
-                  <p className="mt-1 font-mono text-4xl font-extrabold text-foreground drop-shadow-[0_0_20px_oklch(0.66_0.26_300/0.7)]">
+                  <p className="mt-1 font-mono text-4xl font-black text-foreground drop-shadow-[0_0_22px_oklch(0.85_0.15_88/0.35)]">
                     {fmt(remaining)}
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground" dir="rtl">
                     استنى لحد ما ييجي الوقت المناسب… متخشش دلوقتي
                   </p>
-                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted">
+                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted/60">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-[width] duration-300"
+                      className="h-full rounded-full bg-gradient-to-r from-gold-deep via-gold to-gold-soft transition-[width] duration-300"
                       style={{
                         width: `${Math.min(100, Math.max(0, 100 - (remaining / total) * 100))}%`,
                       }}
@@ -272,20 +272,20 @@ function GamePredictor() {
               )}
 
               {!isRowGame && phase === "ready" && (
-                <div className="animate-[pulse-glow_2s_ease-in-out_infinite] rounded-2xl border border-accent bg-accent/10 p-6 text-center shadow-[0_0_40px_oklch(0.8_0.18_180/0.5)]">
-                  <p className="text-3xl font-extrabold text-accent drop-shadow-[0_0_18px_oklch(0.8_0.18_180/0.8)]" dir="rtl">
+                <div className="luxe-panel border-gold/60 p-6 text-center shadow-[0_0_60px_-15px_oklch(0.85_0.15_88/0.6)]">
+                  <p className="gold-text text-3xl font-black" dir="rtl">
                     خش جيم 🚀
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground" dir="rtl">
                     دخول الآن على {name} بالتوقع اللي فوق
                   </p>
-                  <p className="mt-1 font-mono text-xs text-accent">
+                  <p className="mt-1 font-mono text-xs text-gold">
                     {enterAt != null ? formatEnterTime(enterAt) : ""}
                   </p>
                   <button
                     type="button"
                     onClick={reset}
-                    className="mt-4 rounded-full border border-border px-5 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-colors hover:border-primary"
+                    className="mt-4 rounded-full border border-gold/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                   >
                     توقع جديد
                   </button>
@@ -293,7 +293,7 @@ function GamePredictor() {
               )}
             </div>
 
-            <p className="relative mt-4 text-center text-[10px] leading-relaxed text-muted-foreground">
+            <p className="relative mt-4 text-center text-[10px] leading-relaxed text-muted-foreground/70">
               Predictions are statistical suggestions only and never guarantee an outcome.
             </p>
           </section>
