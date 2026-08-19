@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import logo from "@/assets/casino-ai-logo.png";
 import { ParticlesBackground } from "@/components/ParticlesBackground";
+import { UserIdGate, useUserId } from "@/components/UserIdGate";
 import { games, type Game } from "@/data/games";
 import { slugify } from "@/lib/predict";
 import { getLuckMap, getLuckSlot, luckShortLabels, type LuckInfo } from "@/lib/luck";
@@ -46,6 +47,7 @@ function Lobby() {
   const [luckFilter, setLuckFilter] = useState<LuckFilter>("all");
   const [query, setQuery] = useState("");
   const [usersOnline, setUsersOnline] = useState(2417);
+  const { userId, ready, save } = useUserId();
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -107,6 +109,7 @@ function Lobby() {
   return (
     <>
       <ParticlesBackground />
+      <UserIdGate ready={ready} userId={userId} onSave={save} />
       <main className="relative z-10 min-h-screen pb-20">
         {/* Top bar */}
         <header className="sticky top-0 z-30 border-b border-border bg-background/40 backdrop-blur-xl">
@@ -114,6 +117,11 @@ function Lobby() {
             <span className="bg-gradient-to-b from-accent to-primary bg-clip-text text-base font-extrabold tracking-[0.2em] text-transparent">
               Smart Odds
             </span>
+            {userId ? (
+              <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-[11px] font-bold tracking-widest text-foreground">
+                ID: {userId}
+              </span>
+            ) : null}
             <span className="flex items-center gap-2 rounded-full border border-border px-3 py-1 text-[11px] font-medium text-muted-foreground">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
