@@ -23,9 +23,9 @@ export const Route = createFileRoute("/game/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Unavailable — Casino Ai" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Unavailable — Smart Odds" }, { name: "robots", content: "noindex" }] };
     }
-    const title = `${loaderData.name} predictor — Casino Ai`;
+    const title = `${loaderData.name} predictor — Smart Odds`;
     const description = `AI signal predictor for ${loaderData.name}: get a predicted round and the best moment to enter the game.`;
     return {
       meta: [
@@ -145,14 +145,14 @@ function GamePredictor() {
               Lobby
             </Link>
             <span className="gold-text text-sm font-extrabold tracking-[0.32em]">
-              Casino Ai
+              Smart Odds
             </span>
           </div>
         </header>
 
         <div className="mx-auto max-w-3xl px-4">
           {/* Game hero */}
-          <section className="luxe-panel luxe-hairline relative mt-6 overflow-hidden">
+          <section className="luxe-panel luxe-hairline animate-rise relative mt-6 overflow-hidden">
             <img
               src={image}
               alt={`${name} game artwork`}
@@ -179,7 +179,7 @@ function GamePredictor() {
           </section>
 
           {/* Prediction board */}
-          <section className="luxe-panel luxe-hairline relative mt-5 overflow-hidden p-5">
+          <section className="luxe-panel luxe-hairline animate-rise relative mt-5 overflow-hidden p-5">
             <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/15 blur-[70px]" />
             <div className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-gold/10 blur-[70px]" />
 
@@ -435,7 +435,7 @@ function Board({
                   key={i}
                   className={`${cellBase} ${safe ? cellSafe : cellIdle}`}
                 >
-                  {safe ? "💎" : "◆"}
+                  <span className={safe ? "animate-reveal" : ""}>{safe ? "💎" : "◆"}</span>
                 </div>
               );
             })}
@@ -449,21 +449,27 @@ function Board({
     case "goal":
       return (
         <div>
-          <div className="grid grid-cols-3 gap-3">
-            {[0, 1, 2].map((i) => {
+          <div className="grid grid-cols-2 gap-3">
+            {[0, 1].map((i) => {
               const hit = i === prediction.pick;
               return (
                 <div
                   key={i}
-                  className={`flex aspect-[3/4] flex-col items-center justify-center gap-1 rounded-2xl border ${
+                  className={`flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl border transition-all duration-300 ${
                     hit
-                      ? "border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
+                      ? "animate-reveal border-gold bg-gold/10 shadow-[0_0_30px_oklch(0.85_0.15_88/0.5)]"
                       : "border-border bg-muted/25"
                   }`}
                 >
-                  <span className="text-3xl">{hit ? "⚽" : "🥅"}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                    {["Left", "Center", "Right"][i]}
+                  <span className={`text-4xl ${hit ? "animate-float" : "opacity-60"}`}>
+                    {i === 0 ? "⚽" : "🚫"}
+                  </span>
+                  <span
+                    className={`text-xs font-black uppercase tracking-[0.2em] ${
+                      hit ? "text-gold" : "text-muted-foreground"
+                    }`}
+                  >
+                    {i === 0 ? "Goal" : "No Goal"}
                   </span>
                 </div>
               );
@@ -484,7 +490,7 @@ function Board({
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
-            <div key={r} className="flex items-center gap-2">
+            <div key={r} className={`flex items-center gap-2 ${shown ? "animate-rise" : ""}`}>
               <span className="w-16 shrink-0 rounded-lg border border-gold/40 py-1 text-center text-[10px] font-bold text-gold">
                 {row.multiplier}
               </span>
@@ -499,7 +505,7 @@ function Board({
                       key={c}
                       className={`${cellBase} ${safe ? cellSafe : shown ? cellIdle : cellHidden}`}
                     >
-                      {safe ? "🐸" : "🍃"}
+                      <span className={safe ? "animate-reveal" : ""}>{safe ? "🐸" : "🍃"}</span>
                     </div>
                   );
                 })}
@@ -567,7 +573,7 @@ function Board({
           {prediction.rows.map((row, r) => {
             const shown = r >= prediction.rows.length - revealCount;
             return (
-              <div key={r} className="flex justify-center gap-2">
+              <div key={r} className={`flex justify-center gap-2 ${shown ? "animate-rise" : ""}`}>
                 {Array.from({ length: row.cols }, (_, c) => {
                   const safe = shown && c === row.safe;
                   return (
@@ -584,7 +590,7 @@ function Board({
                         alt={safe ? "تفاحة سليمة" : "خانة"}
                         width={40}
                         height={40}
-                        className={`h-9 w-9 object-contain ${safe ? "" : "opacity-80"}`}
+                        className={`h-9 w-9 object-contain ${safe ? "animate-reveal" : "opacity-80"}`}
                       />
                     </div>
                   );
@@ -605,7 +611,7 @@ function Board({
             const shown = r >= prediction.rows.length - revealCount;
             const cashout = shown && r === prediction.cashoutRow;
             return (
-              <div key={r} className="flex items-center gap-2">
+              <div key={r} className={`flex items-center gap-2 ${shown ? "animate-rise" : ""}`}>
                 <div
                   className="grid flex-1 gap-1.5"
                   style={{ gridTemplateColumns: `repeat(${prediction.cols}, minmax(0, 1fr))` }}
@@ -619,7 +625,7 @@ function Board({
                           safe ? cellSafe : shown ? cellIdle : cellHidden
                         }`}
                       >
-                        {safe ? "✦" : "·"}
+                        <span className={safe ? "animate-reveal" : ""}>{safe ? "✦" : "·"}</span>
                       </div>
                     );
                   })}
